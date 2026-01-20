@@ -63,6 +63,24 @@ export default function Home() {
             </div>
           </section>
 
+          {/* Typography Showcase */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-8">
+              Typography with Michroma
+            </h2>
+            <div className="bg-white dark:bg-gray-700 p-8 rounded-lg shadow-md">
+              <h1 className="text-4xl text-gray-800 dark:text-white mb-4">
+                Michroma Heading 1
+              </h1>
+              <h2 className="text-2xl text-gray-800 dark:text-white mb-4">
+                Michroma Heading 2
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                This showcase demonstrates the Michroma Google Font applied to h1 and h2 elements throughout the site.
+              </p>
+            </div>
+          </section>
+
           {/* Footer */}
           <footer className="text-gray-600 dark:text-gray-400">
             <p>Built with ❤️ using modern web technologies</p>
