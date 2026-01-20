@@ -6,7 +6,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true
   },
-  basePath: '/robin-marsman'
+  // Only use basePath in production for GitHub Pages
+  basePath: process.env.NODE_ENV === 'production' ? '/robin-marsman' : ''
 };
 
 export default nextConfig;
