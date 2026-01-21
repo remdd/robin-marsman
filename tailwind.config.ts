@@ -9,7 +9,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        'michroma': ['var(--font-michroma)'],
+        jura: ["var(--font-jura)"],
+        michroma: ["var(--font-michroma)"],
       },
     },
   },
