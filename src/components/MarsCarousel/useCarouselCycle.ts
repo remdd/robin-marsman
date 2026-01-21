@@ -2,13 +2,16 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import type { CarouselState, CarouselConfig, ImageState } from './types';
-import { getRandomRotation, getRandomCorner, getNextImageIndex } from './utils';
+import { getRandomRotation, getRandomCorner, getNextImageIndex, calculateRequiredScale } from './utils';
+import { useViewportSize } from './useViewportSize';
 
 /**
  * Custom hook for managing Mars carousel timing and state transitions
  */
 export const useCarouselCycle = (config: CarouselConfig) => {
   const [isInitialized, setIsInitialized] = useState(false);
+  const viewportSize = useViewportSize();
+  
   const [state, setState] = useState<CarouselState>(() => {
     // Initialize with a static state to prevent hydration mismatch
     const initialImage: ImageState = {
@@ -16,6 +19,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       rotation: 0, // Start with static values
       position: 'top-left',
       opacity: 1,
+      scaleFactor: 1, // Default scale factor
     };
 
     return {
@@ -27,14 +31,24 @@ export const useCarouselCycle = (config: CarouselConfig) => {
   });
 
   /**
+   * Calculate scale factor based on current viewport size
+   */
+  const getScaleFactorForViewport = useCallback((): number => {
+    return calculateRequiredScale(viewportSize.width, viewportSize.height);
+  }, [viewportSize.width, viewportSize.height]);
+
+  /**
    * Initialize with random values after hydration
    */
   useEffect(() => {
+    const scaleFactor = getScaleFactorForViewport();
+    
     const initialImage: ImageState = {
       src: config.images[0],
       rotation: getRandomRotation(),
       position: getRandomCorner(),
       opacity: 1,
+      scaleFactor,
     };
 
     setState({
@@ -45,19 +59,43 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     });
 
     setIsInitialized(true);
-  }, [config.images]);
+  }, [config.images, getScaleFactorForViewport]);
+
+  /**
+   * Update scale factor when viewport size changes
+   */
+  useEffect(() => {
+    if (!isInitialized) return;
+    
+    const newScaleFactor = getScaleFactorForViewport();
+    
+    setState(prevState => ({
+      ...prevState,
+      currentImage: prevState.currentImage ? {
+        ...prevState.currentImage,
+        scaleFactor: newScaleFactor,
+      } : null,
+      nextImage: {
+        ...prevState.nextImage,
+        scaleFactor: newScaleFactor,
+      },
+    }));
+  }, [viewportSize.width, viewportSize.height, isInitialized, getScaleFactorForViewport]);
 
   /**
    * Creates a new random image state for the next image
    */
   const createNextImageState = useCallback((imageIndex: number): ImageState => {
+    const scaleFactor = getScaleFactorForViewport();
+    
     return {
       src: config.images[imageIndex],
       rotation: getRandomRotation(),
       position: getRandomCorner(),
       opacity: 0,
+      scaleFactor,
     };
-  }, [config.images]);
+  }, [config.images, getScaleFactorForViewport]);
 
   /**
    * Advances to the next phase in the carousel cycle

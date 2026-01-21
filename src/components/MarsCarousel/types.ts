@@ -9,6 +9,7 @@ export interface ImageState {
   rotation: Rotation;
   position: CornerPosition;
   opacity: number;
+  scaleFactor: number;
 }
 
 export interface CarouselState {

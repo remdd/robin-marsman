@@ -2,18 +2,24 @@
 
 import Image from "next/image";
 import { getAssetPath } from "@/utils/paths";
+import { getTransformOrigin } from "./utils";
 import type { CarouselImageProps } from "./types";
 
 /**
- * Individual carousel image component with rotation and positioning
- * Fixed approach: separate rotation and positioning transforms
+ * Individual carousel image component with corner-based scaling, positioning, and rotation
+ * Structure: position-wrapper > scale-wrapper (corner origin) > rotation-wrapper (center origin) > image
  */
 export const CarouselImage: React.FC<CarouselImageProps> = ({
   imageState,
   alt,
   className = "",
 }) => {
-  // Calculate positioning based on corner selection
+  const baseImageSize = 1920;
+  
+  // Safety check for scale factor
+  const safeFactor = Math.max(1, Math.min(10, imageState.scaleFactor || 1));
+  
+  // Original simple positioning logic - no complex offset calculations
   let translateX = "0px";
   let translateY = "0px";
 
@@ -23,28 +29,21 @@ export const CarouselImage: React.FC<CarouselImageProps> = ({
       translateY = "0px";
       break;
     case "top-right":
-      translateX = "calc(100vw - 1920px)";
+      translateX = `calc(100vw - ${baseImageSize}px)`;
       translateY = "0px";
       break;
     case "bottom-left":
       translateX = "0px";
-      translateY = "calc(100vh - 1920px)";
+      translateY = `calc(100vh - ${baseImageSize}px)`;
       break;
     case "bottom-right":
-      translateX = "calc(100vw - 1920px)";
-      translateY = "calc(100vh - 1920px)";
+      translateX = `calc(100vw - ${baseImageSize}px)`;
+      translateY = `calc(100vh - ${baseImageSize}px)`;
       break;
   }
 
-  // Debug logging
-  console.log("Image positioning:", {
-    src: imageState.src,
-    rotation: imageState.rotation,
-    position: imageState.position,
-    translateX,
-    translateY,
-    opacity: imageState.opacity,
-  });
+  // Get transform origin for true corner-based scaling
+  const transformOrigin = getTransformOrigin(imageState.position);
 
   return (
     <div
@@ -56,7 +55,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = ({
         overflow: "hidden",
       }}
     >
-      {/* Positioning wrapper */}
+      {/* Position wrapper - places image at corner */}
       <div
         style={{
           position: "absolute",
@@ -65,29 +64,39 @@ export const CarouselImage: React.FC<CarouselImageProps> = ({
           transform: `translate(${translateX}, ${translateY})`,
         }}
       >
-        {/* Rotation wrapper */}
+        {/* Scale wrapper - scales from the positioned corner */}
         <div
           style={{
-            width: "1920px",
-            height: "1920px",
-            transform: `rotate(${imageState.rotation}deg)`,
-            transformOrigin: "center center",
+            width: `${baseImageSize}px`,
+            height: `${baseImageSize}px`,
+            transform: `scale(${safeFactor})`,
+            transformOrigin: transformOrigin,
           }}
         >
-          <Image
-            src={getAssetPath(imageState.src)}
-            alt={alt}
-            width={1920}
-            height={1920}
-            priority={imageState.opacity > 0}
-            className="contrast-125 saturate-100 hue-rotate-350"
+          {/* Rotation wrapper - rotates from center of scaled image */}
+          <div
             style={{
-              objectFit: "cover",
               width: "100%",
               height: "100%",
+              transform: `rotate(${imageState.rotation}deg)`,
+              transformOrigin: "center center",
             }}
-            unoptimized
-          />
+          >
+            <Image
+              src={getAssetPath(imageState.src)}
+              alt={alt}
+              width={baseImageSize}
+              height={baseImageSize}
+              priority={imageState.opacity > 0}
+              className="contrast-125 saturate-100 hue-rotate-350"
+              style={{
+                objectFit: "cover",
+                width: "100%",
+                height: "100%",
+              }}
+              unoptimized
+            />
+          </div>
         </div>
       </div>
     </div>
