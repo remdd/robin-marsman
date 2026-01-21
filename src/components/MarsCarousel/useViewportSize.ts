@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { RESIZE_DEBOUNCE_DURATION } from './config';
+import { useState, useEffect, useRef, useCallback } from "react";
+import { RESIZE_DEBOUNCE_DURATION } from "./config";
 
 interface ViewportSize {
   width: number;
@@ -21,7 +21,7 @@ interface UseViewportSizeResult {
 export const useViewportSize = (): UseViewportSizeResult => {
   const [viewportSize, setViewportSize] = useState<ViewportSize>(() => {
     // Initial SSR-safe values - will be updated on client
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       return {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -75,11 +75,11 @@ export const useViewportSize = (): UseViewportSizeResult => {
     hasInitializedRef.current = true;
 
     // Add resize listener
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup listener and timer on unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
       if (debounceTimerRef.current) {
         clearTimeout(debounceTimerRef.current);
       }

@@ -2,7 +2,11 @@
 
 import { useState, useEffect, useRef } from "react";
 import { calculateTranslationOffset } from "./utils";
-import { TOTAL_CYCLE_DURATION, DEFAULT_TRANSLATION_EASING, TRANSLATION_SPEED_PX_PER_SEC } from "./config";
+import {
+  TOTAL_CYCLE_DURATION,
+  DEFAULT_TRANSLATION_EASING,
+  TRANSLATION_SPEED_PX_PER_SEC,
+} from "./config";
 import type { ImageState } from "./types";
 
 /**

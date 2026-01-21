@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useCallback, useRef } from 'react';
-import type { CarouselState, CarouselConfig, ImageState } from './types';
-import { getRandomRotation, getRandomCorner, getNextImageIndex, calculateRequiredScale, getRandomTranslationVector } from './utils';
-import { useViewportSize } from './useViewportSize';
+import { useState, useEffect, useCallback, useRef } from "react";
+import type { CarouselState, CarouselConfig, ImageState } from "./types";
+import {
+  getRandomRotation,
+  getRandomCorner,
+  getNextImageIndex,
+  calculateRequiredScale,
+  getRandomTranslationVector,
+} from "./utils";
+import { useViewportSize } from "./useViewportSize";
 
 /**
  * Custom hook for managing Mars carousel timing and state transitions
@@ -12,13 +18,13 @@ export const useCarouselCycle = (config: CarouselConfig) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const { viewportSize, isResizing } = useViewportSize();
   const wasResizingRef = useRef(false);
-  
+
   const [state, setState] = useState<CarouselState>(() => {
     // Initialize with a static state to prevent hydration mismatch
     const initialImage: ImageState = {
       src: config.images[0],
       rotation: 0, // Start with static values
-      position: 'top-left',
+      position: "top-left",
       opacity: 1,
       scaleFactor: 1, // Default scale factor
       translationVector: { x: 0, y: 0 }, // No movement initially
@@ -28,7 +34,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     return {
       currentImage: initialImage,
       nextImage: initialImage,
-      phase: 'displaying',
+      phase: "displaying",
       imageIndex: 0,
     };
   });
@@ -47,7 +53,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     const scaleFactor = getScaleFactorForViewport();
     const position = getRandomCorner();
     const translationVector = getRandomTranslationVector(position);
-    
+
     const initialImage: ImageState = {
       src: config.images[0],
       rotation: getRandomRotation(),
@@ -61,7 +67,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     setState({
       currentImage: initialImage,
       nextImage: initialImage,
-      phase: 'displaying',
+      phase: "displaying",
       imageIndex: 0,
     });
 
@@ -73,15 +79,17 @@ export const useCarouselCycle = (config: CarouselConfig) => {
    */
   useEffect(() => {
     if (!isInitialized) return;
-    
+
     // Small delay to ensure DOM is ready, then fade in the first image
     const fadeInTimer = setTimeout(() => {
-      setState(prevState => ({
+      setState((prevState) => ({
         ...prevState,
-        currentImage: prevState.currentImage ? {
-          ...prevState.currentImage,
-          opacity: 1,
-        } : null,
+        currentImage: prevState.currentImage
+          ? {
+              ...prevState.currentImage,
+              opacity: 1,
+            }
+          : null,
       }));
     }, 100); // 100ms delay for smooth initialization
 
@@ -93,21 +101,28 @@ export const useCarouselCycle = (config: CarouselConfig) => {
    */
   useEffect(() => {
     if (!isInitialized) return;
-    
+
     const newScaleFactor = getScaleFactorForViewport();
-    
-    setState(prevState => ({
+
+    setState((prevState) => ({
       ...prevState,
-      currentImage: prevState.currentImage ? {
-        ...prevState.currentImage,
-        scaleFactor: newScaleFactor,
-      } : null,
+      currentImage: prevState.currentImage
+        ? {
+            ...prevState.currentImage,
+            scaleFactor: newScaleFactor,
+          }
+        : null,
       nextImage: {
         ...prevState.nextImage,
         scaleFactor: newScaleFactor,
       },
     }));
-  }, [viewportSize.width, viewportSize.height, isInitialized, getScaleFactorForViewport]);
+  }, [
+    viewportSize.width,
+    viewportSize.height,
+    isInitialized,
+    getScaleFactorForViewport,
+  ]);
 
   /**
    * Reset carousel with a fresh image when resize ends
@@ -119,8 +134,11 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       const scaleFactor = getScaleFactorForViewport();
       const position = getRandomCorner();
       const translationVector = getRandomTranslationVector(position);
-      const nextIndex = getNextImageIndex(state.imageIndex, config.images.length);
-      
+      const nextIndex = getNextImageIndex(
+        state.imageIndex,
+        config.images.length,
+      );
+
       const freshImage: ImageState = {
         src: config.images[nextIndex],
         rotation: getRandomRotation(),
@@ -134,70 +152,84 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       setState({
         currentImage: null,
         nextImage: freshImage,
-        phase: 'fading-in',
+        phase: "fading-in",
         imageIndex: nextIndex,
       });
     }
-    
+
     wasResizingRef.current = isResizing;
-  }, [isResizing, isInitialized, config.images, state.imageIndex, getScaleFactorForViewport]);
+  }, [
+    isResizing,
+    isInitialized,
+    config.images,
+    state.imageIndex,
+    getScaleFactorForViewport,
+  ]);
 
   /**
    * Creates a new random image state for the next image
    */
-  const createNextImageState = useCallback((imageIndex: number): ImageState => {
-    const scaleFactor = getScaleFactorForViewport();
-    const position = getRandomCorner();
-    const translationVector = getRandomTranslationVector(position);
-    
-    return {
-      src: config.images[imageIndex],
-      rotation: getRandomRotation(),
-      position,
-      opacity: 0,
-      scaleFactor,
-      translationVector,
-      animationStartTime: performance.now(), // Start animation immediately
-    };
-  }, [config.images, getScaleFactorForViewport]);
+  const createNextImageState = useCallback(
+    (imageIndex: number): ImageState => {
+      const scaleFactor = getScaleFactorForViewport();
+      const position = getRandomCorner();
+      const translationVector = getRandomTranslationVector(position);
+
+      return {
+        src: config.images[imageIndex],
+        rotation: getRandomRotation(),
+        position,
+        opacity: 0,
+        scaleFactor,
+        translationVector,
+        animationStartTime: performance.now(), // Start animation immediately
+      };
+    },
+    [config.images, getScaleFactorForViewport],
+  );
 
   /**
    * Advances to the next phase in the carousel cycle
    */
   const advancePhase = useCallback(() => {
-    setState(prevState => {
+    setState((prevState) => {
       switch (prevState.phase) {
-        case 'displaying': {
+        case "displaying": {
           // Start fade-out phase
           return {
             ...prevState,
-            phase: 'fading-out',
-            currentImage: prevState.currentImage ? {
-              ...prevState.currentImage,
-              opacity: 0,
-            } : null,
+            phase: "fading-out",
+            currentImage: prevState.currentImage
+              ? {
+                  ...prevState.currentImage,
+                  opacity: 0,
+                }
+              : null,
           };
         }
-        
-        case 'fading-out': {
+
+        case "fading-out": {
           // Start fade-in phase with next image (opacity starts at 0)
-          const nextIndex = getNextImageIndex(prevState.imageIndex, config.images.length);
+          const nextIndex = getNextImageIndex(
+            prevState.imageIndex,
+            config.images.length,
+          );
           const nextImage = createNextImageState(nextIndex);
-          
+
           return {
             ...prevState,
-            phase: 'fading-in',
+            phase: "fading-in",
             currentImage: null,
             nextImage: nextImage, // Keep opacity at 0 initially
             imageIndex: nextIndex,
           };
         }
-        
-        case 'fading-in': {
+
+        case "fading-in": {
           // Complete transition to displaying phase
           return {
             ...prevState,
-            phase: 'displaying',
+            phase: "displaying",
             currentImage: {
               ...prevState.nextImage,
               opacity: 1, // Ensure full opacity for display phase
@@ -205,7 +237,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
             nextImage: prevState.nextImage,
           };
         }
-        
+
         default:
           return prevState;
       }
@@ -216,10 +248,10 @@ export const useCarouselCycle = (config: CarouselConfig) => {
    * Trigger fade-in opacity change after DOM update
    */
   useEffect(() => {
-    if (state.phase === 'fading-in') {
+    if (state.phase === "fading-in") {
       // Use requestAnimationFrame to ensure DOM is updated before changing opacity
       requestAnimationFrame(() => {
-        setState(prevState => ({
+        setState((prevState) => ({
           ...prevState,
           nextImage: {
             ...prevState.nextImage,
@@ -240,15 +272,15 @@ export const useCarouselCycle = (config: CarouselConfig) => {
 
     const scheduleNextPhase = () => {
       let delay: number;
-      
+
       switch (state.phase) {
-        case 'displaying':
+        case "displaying":
           delay = config.displayDuration;
           break;
-        case 'fading-out':
+        case "fading-out":
           delay = config.fadeOutDuration;
           break;
-        case 'fading-in':
+        case "fading-in":
           delay = config.fadeInDuration;
           break;
         default:

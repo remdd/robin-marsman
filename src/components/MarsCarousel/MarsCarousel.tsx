@@ -18,7 +18,8 @@ export const MarsCarousel: React.FC<MarsCarouselProps> = ({
   className = "",
 }) => {
   const [isClient, setIsClient] = useState(false);
-  const { currentImage, nextImage, phase, isResizing } = useCarouselCycle(DEFAULT_CONFIG);
+  const { currentImage, nextImage, phase, isResizing } =
+    useCarouselCycle(DEFAULT_CONFIG);
 
   // Ensure component only renders after client-side hydration
   useEffect(() => {
