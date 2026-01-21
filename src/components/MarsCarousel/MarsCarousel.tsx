@@ -4,17 +4,11 @@ import React, { useState, useEffect } from "react";
 import type { CarouselConfig } from "./types";
 import { CarouselImage } from "./CarouselImage";
 import { useCarouselCycle } from "./useCarouselCycle";
+import { DEFAULT_CONFIG } from "./config";
 
 interface MarsCarouselProps {
   className?: string;
 }
-
-const DEFAULT_CONFIG: CarouselConfig = {
-  displayDuration: 4000, // 4 seconds for development
-  fadeOutDuration: 2000, // 2 seconds
-  fadeInDuration: 2000, // 2 seconds
-  images: ["/img/mars/1.jpg", "/img/mars/2.jpg", "/img/mars/3.jpg"],
-};
 
 /**
  * Dynamic Mars background carousel component

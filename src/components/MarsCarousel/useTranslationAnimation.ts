@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { calculateTranslationOffset } from "./utils";
+import { TOTAL_CYCLE_DURATION, DEFAULT_TRANSLATION_EASING, TRANSLATION_SPEED_PX_PER_SEC } from "./config";
 import type { ImageState } from "./types";
 
 /**
@@ -17,7 +18,7 @@ export const useTranslationAnimation = (imageState: ImageState) => {
   const vectorX = imageState.translationVector?.x ?? 0;
   const vectorY = imageState.translationVector?.y ?? 0;
   const animationStartTime = imageState.animationStartTime;
-  const easing = imageState.easing || "subtle";
+  const easing = imageState.easing || DEFAULT_TRANSLATION_EASING;
 
   // Calculate offset synchronously on every render - this ensures we never
   // return {0,0} when we should have a non-zero offset
@@ -30,8 +31,9 @@ export const useTranslationAnimation = (imageState: ImageState) => {
     return calculateTranslationOffset(
       translationVector,
       elapsedTime,
-      8000,
+      TOTAL_CYCLE_DURATION,
       easing,
+      TRANSLATION_SPEED_PX_PER_SEC,
     );
   })();
 

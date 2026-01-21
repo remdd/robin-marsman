@@ -5,6 +5,11 @@ import React, { useMemo } from "react";
 import { getAssetPath } from "@/utils/paths";
 import { getTransformOrigin } from "./utils";
 import { useTranslationAnimation } from "./useTranslationAnimation";
+import {
+  BASE_IMAGE_SIZE,
+  FADE_IN_TRANSITION,
+  FADE_OUT_TRANSITION,
+} from "./config";
 import type { CarouselImageProps } from "./types";
 
 /**
@@ -14,8 +19,6 @@ import type { CarouselImageProps } from "./types";
  */
 export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
   ({ imageState, alt, className = "" }) => {
-    const baseImageSize = 1920;
-
     // Safety check for scale factor
     const safeFactor = useMemo(
       () => Math.max(1, Math.min(10, imageState.scaleFactor || 1)),
@@ -32,23 +35,23 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
           return { translateX: "0px", translateY: "0px" };
         case "top-right":
           return {
-            translateX: `calc(100vw - ${baseImageSize}px)`,
+            translateX: `calc(100vw - ${BASE_IMAGE_SIZE}px)`,
             translateY: "0px",
           };
         case "bottom-left":
           return {
             translateX: "0px",
-            translateY: `calc(100vh - ${baseImageSize}px)`,
+            translateY: `calc(100vh - ${BASE_IMAGE_SIZE}px)`,
           };
         case "bottom-right":
           return {
-            translateX: `calc(100vw - ${baseImageSize}px)`,
-            translateY: `calc(100vh - ${baseImageSize}px)`,
+            translateX: `calc(100vw - ${BASE_IMAGE_SIZE}px)`,
+            translateY: `calc(100vh - ${BASE_IMAGE_SIZE}px)`,
           };
         default:
           return { translateX: "0px", translateY: "0px" };
       }
-    }, [imageState.position, baseImageSize]);
+    }, [imageState.position]);
 
     // Memoize transform origin for corner-based scaling
     const transformOrigin = useMemo(
@@ -57,10 +60,12 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
     );
 
     // Memoize styles to prevent unnecessary recalculations
+    // Use fade-in transition when opacity > 0 (fading in), fade-out when opacity === 0 (fading out)
     const containerStyle = useMemo(
       () => ({
         opacity: imageState.opacity,
-        transition: "opacity 2s ease-in-out",
+        transition:
+          imageState.opacity > 0 ? FADE_IN_TRANSITION : FADE_OUT_TRANSITION,
         zIndex: 0,
         overflow: "hidden",
       }),
@@ -86,12 +91,12 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
 
     const scaleStyle = useMemo(
       () => ({
-        width: `${baseImageSize}px`,
-        height: `${baseImageSize}px`,
+        width: `${BASE_IMAGE_SIZE}px`,
+        height: `${BASE_IMAGE_SIZE}px`,
         transform: `scale(${safeFactor})`,
         transformOrigin: transformOrigin,
       }),
-      [baseImageSize, safeFactor, transformOrigin],
+      [safeFactor, transformOrigin],
     );
 
     const rotationStyle = useMemo(
@@ -126,8 +131,8 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
                 <Image
                   src={getAssetPath(imageState.src)}
                   alt={alt}
-                  width={baseImageSize}
-                  height={baseImageSize}
+                  width={BASE_IMAGE_SIZE}
+                  height={BASE_IMAGE_SIZE}
                   priority={imageState.opacity > 0}
                   className="contrast-125 saturate-100 hue-rotate-350"
                   style={imageStyle}
