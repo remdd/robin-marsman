@@ -134,7 +134,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
                   width={BASE_IMAGE_SIZE}
                   height={BASE_IMAGE_SIZE}
                   priority={imageState.opacity > 0}
-                  className="contrast-125 saturate-100 hue-rotate-350"
+                  className="contrast-125 saturate-110 hue-rotate-345"
                   style={imageStyle}
                   unoptimized
                 />
