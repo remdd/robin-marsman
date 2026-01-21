@@ -44,14 +44,16 @@ export const useCarouselCycle = (config: CarouselConfig) => {
    */
   useEffect(() => {
     const scaleFactor = getScaleFactorForViewport();
+    const position = getRandomCorner();
+    const translationVector = getRandomTranslationVector(position);
     
     const initialImage: ImageState = {
       src: config.images[0],
       rotation: getRandomRotation(),
-      position: getRandomCorner(),
+      position,
       opacity: 1,
       scaleFactor,
-      translationVector: { x: 0, y: 0 }, // Will be properly set when we update createNextImageState
+      translationVector,
       animationStartTime: performance.now(),
     };
 
