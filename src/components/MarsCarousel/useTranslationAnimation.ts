@@ -1,59 +1,55 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { calculateTranslationOffset } from './utils';
-import type { ImageState } from './types';
+import { useState, useEffect, useRef, useCallback } from "react";
+import { calculateTranslationOffset } from "./utils";
+import type { ImageState } from "./types";
 
 /**
  * Custom hook for managing translation animation of images
  * Provides smooth 60fps animation using requestAnimationFrame
- * Optimized for performance with memoization and conditional updates
- * Supports configurable easing functions
+ * Calculates offset synchronously on each render to prevent flickers
  */
 export const useTranslationAnimation = (imageState: ImageState) => {
   const animationRef = useRef<number | undefined>(undefined);
-  const [currentOffset, setCurrentOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
-  const lastOffsetRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  
-  // Memoize vector, start time, and easing to prevent unnecessary re-renders
-  const { translationVector, animationStartTime, easing } = useMemo(() => ({
-    translationVector: imageState.translationVector,
-    animationStartTime: imageState.animationStartTime,
-    easing: imageState.easing || 'subtle'
-  }), [imageState.translationVector, imageState.animationStartTime, imageState.easing]);
-  
+  const [tick, setTick] = useState(0);
+
+  // Extract primitive values to use as stable dependencies
+  const vectorX = imageState.translationVector?.x ?? 0;
+  const vectorY = imageState.translationVector?.y ?? 0;
+  const animationStartTime = imageState.animationStartTime;
+  const easing = imageState.easing || "subtle";
+
+  // Calculate offset synchronously on every render - this ensures we never
+  // return {0,0} when we should have a non-zero offset
+  const currentOffset = (() => {
+    if (!animationStartTime) {
+      return { x: 0, y: 0 };
+    }
+    const translationVector = { x: vectorX, y: vectorY };
+    const elapsedTime = performance.now() - animationStartTime;
+    return calculateTranslationOffset(
+      translationVector,
+      elapsedTime,
+      8000,
+      easing,
+    );
+  })();
+
   useEffect(() => {
     // Safety check for animation properties
-    if (!animationStartTime || !translationVector) {
-      setCurrentOffset({ x: 0, y: 0 });
+    if (!animationStartTime) {
       return;
     }
-    
+
     const animate = () => {
-      const elapsedTime = performance.now() - animationStartTime;
-      const newOffset = calculateTranslationOffset(
-        translationVector, 
-        elapsedTime, 
-        8000, // 8 second total duration
-        easing
-      );
-      
-      // Only update state if offset has changed significantly (reduce re-renders)
-      const threshold = 0.1; // pixels
-      if (
-        Math.abs(newOffset.x - lastOffsetRef.current.x) > threshold ||
-        Math.abs(newOffset.y - lastOffsetRef.current.y) > threshold
-      ) {
-        lastOffsetRef.current = newOffset;
-        setCurrentOffset(newOffset);
-      }
-      
+      // Trigger a re-render by updating tick, which will recalculate currentOffset
+      setTick((t) => t + 1);
       animationRef.current = requestAnimationFrame(animate);
     };
-    
+
     // Start animation immediately
     animationRef.current = requestAnimationFrame(animate);
-    
+
     // Cleanup function
     return () => {
       if (animationRef.current) {
@@ -61,8 +57,8 @@ export const useTranslationAnimation = (imageState: ImageState) => {
         animationRef.current = undefined;
       }
     };
-  }, [animationStartTime, translationVector, easing]);
-  
+  }, [animationStartTime, vectorX, vectorY, easing]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -72,6 +68,6 @@ export const useTranslationAnimation = (imageState: ImageState) => {
       }
     };
   }, []);
-  
+
   return currentOffset;
 };

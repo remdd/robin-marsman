@@ -5,20 +5,16 @@ import React, { useMemo } from "react";
 import { getAssetPath } from "@/utils/paths";
 import { getTransformOrigin } from "./utils";
 import { useTranslationAnimation } from "./useTranslationAnimation";
-import { useViewportSize } from "./useViewportSize";
-import { DebugOverlay } from "./DebugOverlay";
 import type { CarouselImageProps } from "./types";
 
 /**
  * Individual carousel image component with corner-based scaling, positioning, rotation, and translation
  * Structure: position-wrapper > translation-wrapper > scale-wrapper (corner origin) > rotation-wrapper (center origin) > image
  * Optimized with React.memo and useMemo for performance
- * Includes optional debug overlay in development mode
  */
-export const CarouselImage: React.FC<CarouselImageProps & { debug?: boolean }> =
-  React.memo(({ imageState, alt, className = "", debug = false }) => {
+export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
+  ({ imageState, alt, className = "" }) => {
     const baseImageSize = 1920;
-    const viewportSize = useViewportSize();
 
     // Safety check for scale factor
     const safeFactor = useMemo(
@@ -141,17 +137,9 @@ export const CarouselImage: React.FC<CarouselImageProps & { debug?: boolean }> =
             </div>
           </div>
         </div>
-
-        {/* Debug overlay - only in development mode */}
-        {debug && process.env.NODE_ENV === "development" && (
-          <DebugOverlay
-            imageState={imageState}
-            translationOffset={translationOffset}
-            viewportSize={viewportSize}
-          />
-        )}
       </div>
     );
-  });
+  },
+);
 
 CarouselImage.displayName = "CarouselImage";
