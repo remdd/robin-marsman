@@ -4,25 +4,25 @@
 
 ### Initial:
 
-[ ] Mixcloud
-[ ] Soundcloud 
-[ ] Email
+- [ ] Mixcloud
+- [ ] Soundcloud 
+- [ ] Email
 
 ### Future:
 
-[ ] Bandcamp
-[ ] Instagram
-[ ] Facebook
+- [ ] Bandcamp
+- [ ] Instagram
+- [ ] Facebook
 
 ## Pages
 
-[ ] Mixes
-[ ] Productions
-[ ] About
+- [ ] Mixes
+- [ ] Productions
+- [ ] About
 
 ## Misc
 
-[ ] Logo
-[ ] Footer / copyright / redmarsdigital
-[ ] Page transitions
-[ ] Carousel graphic overlay
+- [ ] Logo
+- [ ] Footer / copyright / redmarsdigital
+- [ ] Page transitions
+- [ ] Carousel graphic overlay
