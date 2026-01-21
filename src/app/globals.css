@@ -27,7 +27,8 @@ body {
 }
 
 /* Apply Michroma font to h1 and h2 headings */
-h1, h2 {
+h1,
+h2 {
   font-family: var(--font-michroma), sans-serif;
   font-weight: 400; /* Michroma only has regular weight */
 }
