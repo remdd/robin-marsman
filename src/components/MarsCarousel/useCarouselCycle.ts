@@ -51,7 +51,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       src: config.images[0],
       rotation: getRandomRotation(),
       position,
-      opacity: 1,
+      opacity: 0, // Start with opacity 0 for fade-in effect
       scaleFactor,
       translationVector,
       animationStartTime: performance.now(),
@@ -66,6 +66,26 @@ export const useCarouselCycle = (config: CarouselConfig) => {
 
     setIsInitialized(true);
   }, [config.images, getScaleFactorForViewport]);
+
+  /**
+   * Fade in the first image after initialization
+   */
+  useEffect(() => {
+    if (!isInitialized) return;
+    
+    // Small delay to ensure DOM is ready, then fade in the first image
+    const fadeInTimer = setTimeout(() => {
+      setState(prevState => ({
+        ...prevState,
+        currentImage: prevState.currentImage ? {
+          ...prevState.currentImage,
+          opacity: 1,
+        } : null,
+      }));
+    }, 100); // 100ms delay for smooth initialization
+
+    return () => clearTimeout(fadeInTimer);
+  }, [isInitialized]);
 
   /**
    * Update scale factor when viewport size changes
