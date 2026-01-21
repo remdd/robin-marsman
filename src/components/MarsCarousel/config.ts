@@ -57,6 +57,13 @@ export const FADE_IN_TRANSITION = `opacity ${FADE_IN_DURATION}ms ease-in-out`;
 export const FADE_OUT_TRANSITION = `opacity ${FADE_OUT_DURATION}ms ease-in-out`;
 
 // =============================================================================
+// Resize Handling Configuration
+// =============================================================================
+
+/** Debounce duration for viewport resize events (in milliseconds) */
+export const RESIZE_DEBOUNCE_DURATION = 2000;
+
+// =============================================================================
 // Default Carousel Configuration
 // =============================================================================
 

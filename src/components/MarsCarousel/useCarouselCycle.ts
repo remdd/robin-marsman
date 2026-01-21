@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import type { CarouselState, CarouselConfig, ImageState } from './types';
 import { getRandomRotation, getRandomCorner, getNextImageIndex, calculateRequiredScale, getRandomTranslationVector } from './utils';
 import { useViewportSize } from './useViewportSize';
@@ -10,7 +10,8 @@ import { useViewportSize } from './useViewportSize';
  */
 export const useCarouselCycle = (config: CarouselConfig) => {
   const [isInitialized, setIsInitialized] = useState(false);
-  const viewportSize = useViewportSize();
+  const { viewportSize, isResizing } = useViewportSize();
+  const wasResizingRef = useRef(false);
   
   const [state, setState] = useState<CarouselState>(() => {
     // Initialize with a static state to prevent hydration mismatch
@@ -107,6 +108,39 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       },
     }));
   }, [viewportSize.width, viewportSize.height, isInitialized, getScaleFactorForViewport]);
+
+  /**
+   * Reset carousel with a fresh image when resize ends
+   */
+  useEffect(() => {
+    // Track when resize ends (transition from true to false)
+    if (wasResizingRef.current && !isResizing && isInitialized) {
+      // Resizing just ended - start fresh with a new image fading in
+      const scaleFactor = getScaleFactorForViewport();
+      const position = getRandomCorner();
+      const translationVector = getRandomTranslationVector(position);
+      const nextIndex = getNextImageIndex(state.imageIndex, config.images.length);
+      
+      const freshImage: ImageState = {
+        src: config.images[nextIndex],
+        rotation: getRandomRotation(),
+        position,
+        opacity: 0, // Start with opacity 0 for fade-in
+        scaleFactor,
+        translationVector,
+        animationStartTime: performance.now(),
+      };
+
+      setState({
+        currentImage: null,
+        nextImage: freshImage,
+        phase: 'fading-in',
+        imageIndex: nextIndex,
+      });
+    }
+    
+    wasResizingRef.current = isResizing;
+  }, [isResizing, isInitialized, config.images, state.imageIndex, getScaleFactorForViewport]);
 
   /**
    * Creates a new random image state for the next image
@@ -240,5 +274,6 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     currentImage: state.currentImage,
     nextImage: state.nextImage,
     phase: state.phase,
+    isResizing,
   };
 };

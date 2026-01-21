@@ -18,7 +18,7 @@ export const MarsCarousel: React.FC<MarsCarouselProps> = ({
   className = "",
 }) => {
   const [isClient, setIsClient] = useState(false);
-  const { currentImage, nextImage, phase } = useCarouselCycle(DEFAULT_CONFIG);
+  const { currentImage, nextImage, phase, isResizing } = useCarouselCycle(DEFAULT_CONFIG);
 
   // Ensure component only renders after client-side hydration
   useEffect(() => {
@@ -34,14 +34,19 @@ export const MarsCarousel: React.FC<MarsCarouselProps> = ({
       className={`absolute inset-0 overflow-hidden ${className}`}
       style={{ zIndex: 0 }}
     >
-      {/* Current image during display and fade-out phases */}
-      {currentImage && phase !== "fading-in" && (
-        <CarouselImage imageState={currentImage} alt="Mars background" />
-      )}
+      {/* Hide all images during resize */}
+      {!isResizing && (
+        <>
+          {/* Current image during display and fade-out phases */}
+          {currentImage && phase !== "fading-in" && (
+            <CarouselImage imageState={currentImage} alt="Mars background" />
+          )}
 
-      {/* Next image during fade-in phase */}
-      {phase === "fading-in" && (
-        <CarouselImage imageState={nextImage} alt="Mars background" />
+          {/* Next image during fade-in phase */}
+          {phase === "fading-in" && (
+            <CarouselImage imageState={nextImage} alt="Mars background" />
+          )}
+        </>
       )}
     </div>
   );
