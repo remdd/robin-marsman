@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import type { CarouselState, CarouselConfig, ImageState } from './types';
-import { getRandomRotation, getRandomCorner, getNextImageIndex, calculateRequiredScale } from './utils';
+import { getRandomRotation, getRandomCorner, getNextImageIndex, calculateRequiredScale, getRandomTranslationVector } from './utils';
 import { useViewportSize } from './useViewportSize';
 
 /**
@@ -20,6 +20,8 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       position: 'top-left',
       opacity: 1,
       scaleFactor: 1, // Default scale factor
+      translationVector: { x: 0, y: 0 }, // No movement initially
+      animationStartTime: 0, // Will be set after hydration
     };
 
     return {
@@ -49,6 +51,8 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       position: getRandomCorner(),
       opacity: 1,
       scaleFactor,
+      translationVector: { x: 0, y: 0 }, // Will be properly set when we update createNextImageState
+      animationStartTime: performance.now(),
     };
 
     setState({
@@ -87,13 +91,17 @@ export const useCarouselCycle = (config: CarouselConfig) => {
    */
   const createNextImageState = useCallback((imageIndex: number): ImageState => {
     const scaleFactor = getScaleFactorForViewport();
+    const position = getRandomCorner();
+    const translationVector = getRandomTranslationVector(position);
     
     return {
       src: config.images[imageIndex],
       rotation: getRandomRotation(),
-      position: getRandomCorner(),
+      position,
       opacity: 0,
       scaleFactor,
+      translationVector,
+      animationStartTime: performance.now(), // Start animation immediately
     };
   }, [config.images, getScaleFactorForViewport]);
 

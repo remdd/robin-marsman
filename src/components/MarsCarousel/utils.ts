@@ -119,3 +119,80 @@ export const getScaledDimensions = (
     height: scaledSize
   };
 };
+
+/**
+ * Generate random translation vector within corner's 90° range
+ * Corner movement directions:
+ * - top-left: 0° to 90° (East to South)  
+ * - top-right: 90° to 180° (South to West)
+ * - bottom-left: 270° to 360° (North to East)
+ * - bottom-right: 180° to 270° (West to North)
+ */
+export const getRandomTranslationVector = (corner: CornerPosition): { x: number; y: number } => {
+  const ranges = {
+    'top-left': { minAngle: 0, maxAngle: 90 },
+    'top-right': { minAngle: 90, maxAngle: 180 },
+    'bottom-left': { minAngle: 270, maxAngle: 360 }, 
+    'bottom-right': { minAngle: 180, maxAngle: 270 }
+  };
+  
+  const { minAngle, maxAngle } = ranges[corner];
+  const randomAngle = minAngle + Math.random() * (maxAngle - minAngle);
+  const radians = (randomAngle * Math.PI) / 180;
+  
+  return {
+    x: Math.cos(radians),
+    y: Math.sin(radians)
+  };
+};
+
+/**
+ * Easing functions for smooth animation transitions
+ */
+export const easingFunctions = {
+  // Linear (no easing) - default
+  linear: (t: number): number => t,
+  
+  // Ease out quad - subtle deceleration
+  easeOutQuad: (t: number): number => t * (2 - t),
+  
+  // Ease in out quad - gentle acceleration and deceleration
+  easeInOutQuad: (t: number): number => 
+    t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+  
+  // Ease out cubic - more pronounced deceleration
+  easeOutCubic: (t: number): number => 1 - Math.pow(1 - t, 3),
+  
+  // Very subtle easing - barely noticeable organic feel
+  subtle: (t: number): number => t * t * (3 - 2 * t), // smoothstep
+} as const;
+
+export type EasingFunction = keyof typeof easingFunctions;
+
+/**
+ * Calculate current translation offset based on elapsed time with optional easing
+ * Speed: 10px/second constant with easing applied to the progression
+ */
+export const calculateTranslationOffset = (
+  vector: { x: number; y: number },
+  elapsedTime: number, // milliseconds since animation start
+  totalDuration: number = 8000, // total animation duration in ms (8 seconds)
+  easing: EasingFunction = 'subtle' // default to subtle easing
+): { x: number; y: number } => {
+  const SPEED_PX_PER_MS = 10 / 1000; // 10px per second = 0.01px per millisecond
+  
+  // Calculate progress ratio (0 to 1) capped at 1.0
+  const progress = Math.min(elapsedTime / totalDuration, 1.0);
+  
+  // Apply easing function to progress
+  const easedProgress = easingFunctions[easing](progress);
+  
+  // Calculate final distance with easing applied
+  const finalDistance = totalDuration * SPEED_PX_PER_MS; // Total distance over 8 seconds
+  const currentDistance = easedProgress * finalDistance;
+  
+  return {
+    x: vector.x * currentDistance,
+    y: vector.y * currentDistance
+  };
+};
