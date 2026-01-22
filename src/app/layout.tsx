@@ -47,10 +47,20 @@ export default function RootLayout({
         </div>
         <div className="fixed inset-0 bg-black opacity-30 z-[-2]" />
         <div className="fixed inset-0 z-[-1] shadow-[inset_0_0_250px_100px_rgba(0,0,0,0.4)]" />
-        
-        {/* Scrollable content layer */}
-        <div className="relative z-10 min-h-screen">
-          <Navigation />
+
+        {/* Fixed navigation */}
+        <Navigation />
+
+        {/* Scrollable content viewport with content fade-out at top */}
+        <div
+          className="fixed inset-0 top-[108px] overflow-y-auto z-10"
+          style={{
+            maskImage:
+              "linear-gradient(to bottom, transparent 0px, black 10px)",
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0px, black 10px)",
+          }}
+        >
           {children}
         </div>
       </body>
