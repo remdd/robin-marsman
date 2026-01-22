@@ -1,9 +1,10 @@
 import { PageContainer } from "@/components/PageContainer";
+import { H1 } from "@/components/H1";
 
 export default function About() {
   return (
     <PageContainer>
-      <h1 className="text-6xl font-bold text-white tracking-widest">about</h1>
+      <H1>about</H1>
     </PageContainer>
   );
 }
