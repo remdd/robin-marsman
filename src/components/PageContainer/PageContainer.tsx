@@ -7,7 +7,10 @@ interface PageContainerProps {
   className?: string;
 }
 
-export function PageContainer({ children, className = "" }: PageContainerProps) {
+export function PageContainer({
+  children,
+  className = "",
+}: PageContainerProps) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -20,15 +23,15 @@ export function PageContainer({ children, className = "" }: PageContainerProps) 
   }, []);
 
   return (
-    <div className={`min-h-screen flex flex-col items-center justify-center ${className}`}>
+    <div
+      className={`min-h-screen flex flex-col items-center justify-center ${className} p-16 mt-32`}
+    >
       <div
-        className={`transition-all duration-700 ease-out ${
-          isVisible
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 translate-y-8"
+        className={`transition-all duration-700 ease-out w-full ${
+          isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
         }`}
       >
-        <div className="flex flex-col items-center text-center">
+        <div className="flex flex-col items-center text-center w-full">
           {children}
         </div>
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Michroma, Jura } from "next/font/google";
 import { MarsCarousel } from "@/components/MarsCarousel";
+import { Navigation } from "@/components/Navigation";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -40,13 +41,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${michroma.variable} ${jura.variable} antialiased`}
       >
-        <div className="min-h-screen relative bg-black">
+        {/* Fixed background layer */}
+        <div className="fixed inset-0 bg-black z-[-3]">
           <MarsCarousel />
-          <div className="absolute inset-0 bg-black opacity-30 z-[1]" />
-          <div className="absolute inset-0 z-[2] shadow-[inset_0_0_250px_100px_rgba(0,0,0,0.4)]" />
-          <div className="relative z-10">
-            {children}
-          </div>
+        </div>
+        <div className="fixed inset-0 bg-black opacity-30 z-[-2]" />
+        <div className="fixed inset-0 z-[-1] shadow-[inset_0_0_250px_100px_rgba(0,0,0,0.4)]" />
+        
+        {/* Scrollable content layer */}
+        <div className="relative z-10 min-h-screen">
+          <Navigation />
+          {children}
         </div>
       </body>
     </html>

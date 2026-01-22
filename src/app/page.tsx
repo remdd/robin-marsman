@@ -1,4 +1,3 @@
-import { Navigation } from "@/components/Navigation";
 import { PageContainer } from "@/components/PageContainer";
 
 export default function Home() {
@@ -11,7 +10,6 @@ export default function Home() {
       <p className="py-4 px-8 bg-white text-lg">
         Debut album <strong>"Red world dawning"</strong> coming soon
       </p>
-      <Navigation />
     </PageContainer>
   );
 }
