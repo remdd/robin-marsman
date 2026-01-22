@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Michroma, Jura } from "next/font/google";
+import { MarsCarousel } from "@/components/MarsCarousel";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -39,7 +40,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${michroma.variable} ${jura.variable} antialiased`}
       >
-        {children}
+        <div className="min-h-screen relative bg-black">
+          <MarsCarousel />
+          <div className="absolute inset-0 bg-black opacity-30 z-[1]" />
+          <div className="absolute inset-0 z-[2] shadow-[inset_0_0_250px_100px_rgba(0,0,0,0.4)]" />
+          <div className="relative z-10">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
