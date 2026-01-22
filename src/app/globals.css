@@ -32,5 +32,4 @@ h1,
 h2 {
   font-family: var(--font-michroma), sans-serif;
   font-weight: 400; /* Michroma only has regular weight */
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import classNames from "classnames";
+import { TextLink } from "@/components/TextLink";
 
 interface NavLinkProps {
   href: string;
@@ -12,24 +13,27 @@ interface NavLinkProps {
 function NavLink({ href, children, isActive }: NavLinkProps) {
   return (
     <li className="relative">
-      <Link
+      <TextLink
         href={href}
-        className={`group relative text-white text-lg tracking-wider py-2 px-4 inline-block transition-colors duration-200 hover:text-gray-200 ${
-          isActive ? "text-white" : ""
-        }`}
+        className={classNames(
+          "group relative text-sm sm:text-base md:text-lg py-2 px-2 sm:px-3 md:px-4",
+          {
+            "text-white hover:text-white": isActive,
+          },
+        )}
       >
         {children}
 
-        {/* Current page underline (always visible with 4px height) */}
+        {/* Current page underline (always visible with 1px height) */}
         {isActive && (
-          <div className="absolute bottom-0 left-4 right-4 h-[2px] bg-white" />
+          <div className="absolute bottom-0 left-2 sm:left-3 md:left-4 right-2 sm:right-3 md:right-4 h-px bg-white" />
         )}
 
-        {/* Hover animation underline (only for non-active links, 4px height) */}
+        {/* Hover animation underline (only for non-active links, 1px height) */}
         {!isActive && (
-          <div className="absolute bottom-0 left-4 h-[2px] bg-white w-0 group-hover:w-[calc(100%-2rem)] transition-all duration-300 ease-out" />
+          <div className="absolute bottom-0 left-2 sm:left-3 md:left-4 h-px bg-white w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)] transition-all duration-300 ease-out" />
         )}
-      </Link>
+      </TextLink>
     </li>
   );
 }
@@ -49,8 +53,8 @@ export function Navigation() {
     pathname === "/" ? "/" : pathname.replace(/\/$/, "");
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-20 py-8">
-      <ul className="flex justify-center space-x-8">
+    <nav className="fixed top-0 left-0 right-0 z-20 py-4 sm:py-6 md:py-8 px-4">
+      <ul className="flex flex-wrap justify-center gap-x-2 gap-y-2 sm:gap-x-4 md:gap-x-8">
         {navItems.map(({ href, label }) => {
           const isActive = normalizedPathname === href;
 

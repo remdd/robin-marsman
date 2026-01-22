@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import type { CarouselConfig } from "./types";
 import { CarouselImage } from "./CarouselImage";
 import { useCarouselCycle } from "./useCarouselCycle";
 import { DEFAULT_CONFIG } from "./config";
+import classNames from "classnames";
 
 interface MarsCarouselProps {
   className?: string;
@@ -32,7 +32,7 @@ export const MarsCarousel: React.FC<MarsCarouselProps> = ({
 
   return (
     <div
-      className={`absolute inset-0 overflow-hidden ${className}`}
+      className={classNames("absolute inset-0 overflow-hidden", className)}
       style={{ zIndex: 0 }}
     >
       {/* Hide all images during resize */}

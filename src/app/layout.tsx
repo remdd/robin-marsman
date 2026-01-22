@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Michroma, Jura } from "next/font/google";
 import { MarsCarousel } from "@/components/MarsCarousel";
 import { Navigation } from "@/components/Navigation";
+import classNames from "classnames";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,9 +27,9 @@ const jura = Jura({
 });
 
 export const metadata: Metadata = {
-  title: "Robin Marsman - Next.js & GitHub Pages",
+  title: "Robin Marsman - DJ and music production website",
   description:
-    "A modern web application built with Next.js, TypeScript, and Tailwind CSS, deployed to GitHub Pages",
+    "Audio and info from Robin Marsman, UK-based DJ and electronic music producer.",
 };
 
 export default function RootLayout({
@@ -39,7 +40,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${michroma.variable} ${jura.variable} antialiased`}
+        className={classNames(
+          geistSans.variable,
+          geistMono.variable,
+          michroma.variable,
+          jura.variable,
+          "antialiased",
+        )}
       >
         {/* Fixed background layer */}
         <div className="fixed inset-0 bg-black z-[-3]">

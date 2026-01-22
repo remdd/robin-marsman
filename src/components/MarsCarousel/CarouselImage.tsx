@@ -11,6 +11,7 @@ import {
   FADE_OUT_TRANSITION,
 } from "./config";
 import type { CarouselImageProps } from "./types";
+import classNames from "classnames";
 
 /**
  * Individual carousel image component with corner-based scaling, positioning, rotation, and translation
@@ -119,7 +120,10 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
     );
 
     return (
-      <div className={`absolute inset-0 ${className}`} style={containerStyle}>
+      <div
+        className={classNames("absolute inset-0", className)}
+        style={containerStyle}
+      >
         {/* Position wrapper - places image at corner */}
         <div style={positionStyle}>
           {/* Translation wrapper - animated movement away from corner */}

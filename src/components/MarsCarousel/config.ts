@@ -55,10 +55,10 @@ export const DEFAULT_TRANSLATION_EASING: EasingFunction = "linear";
 // =============================================================================
 
 /** CSS transition timing for fade-in (opacity 0 -> 1) */
-export const FADE_IN_TRANSITION = `opacity ${FADE_IN_DURATION}ms ease-in-out`;
+export const FADE_IN_TRANSITION = `opacity ${FADE_IN_DURATION}ms cubic-bezier(0.25, 1, 0.5, 1)`;
 
 /** CSS transition timing for fade-out (opacity 1 -> 0) */
-export const FADE_OUT_TRANSITION = `opacity ${FADE_OUT_DURATION}ms ease-in-out`;
+export const FADE_OUT_TRANSITION = `opacity ${FADE_OUT_DURATION}ms cubic-bezier(0.5, 0, 0.75, 0)`;
 
 // =============================================================================
 // Resize Handling Configuration

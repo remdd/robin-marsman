@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import classNames from "classnames";
 
 interface MixcloudEmbedProps {
   src: string;
@@ -15,7 +16,7 @@ export function MixcloudEmbed({ src, className = "" }: MixcloudEmbedProps) {
   };
 
   return (
-    <div className={`max-w-3xl w-full mt-16 relative ${className}`}>
+    <div className={classNames("max-w-3xl w-full mb-16 relative", className)}>
       {/* Loading spinner */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded">
@@ -30,7 +31,7 @@ export function MixcloudEmbed({ src, className = "" }: MixcloudEmbedProps) {
         src={src}
         allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"
         onLoad={handleLoad}
-        className="rounded"
+        className="rounded shadow-lg bg-black"
       />
     </div>
   );
