@@ -45,7 +45,7 @@ export const TOTAL_CYCLE_DURATION =
 // =============================================================================
 
 /** Translation speed in pixels per second */
-export const TRANSLATION_SPEED_PX_PER_SEC = 40;
+export const TRANSLATION_SPEED_PX_PER_SEC = 25;
 
 /** Default easing function for translation animations */
 export const DEFAULT_TRANSLATION_EASING: EasingFunction = "linear";

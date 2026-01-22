@@ -5,7 +5,7 @@
 ### Initial:
 
 - [ ] Mixcloud
-- [ ] Soundcloud 
+- [ ] Soundcloud
 - [ ] Email
 
 ### Future:
@@ -24,5 +24,5 @@
 
 - [ ] Logo
 - [ ] Footer / copyright / redmarsdigital
-- [ ] Page transitions
+- [x] Page transitions
 - [ ] Carousel graphic overlay
