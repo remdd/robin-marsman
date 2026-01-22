@@ -1,1 +1,1 @@
-export { H1 } from "./H1";
+export { Textbox } from "./Textbox";
