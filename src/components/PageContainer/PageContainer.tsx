@@ -24,7 +24,7 @@ export function PageContainer({
 
   return (
     <div
-      className={`min-h-screen flex flex-col items-center justify-center ${className} p-16 pt-48`}
+      className={`flex flex-col items-center justify-items-start ${className} p-16 pt-48`}
     >
       <div
         className={`transition-all duration-700 ease-out w-full ${
