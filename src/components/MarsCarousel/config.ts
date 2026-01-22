@@ -17,6 +17,10 @@ export const CAROUSEL_IMAGES = [
   "/img/mars/1.jpg",
   "/img/mars/2.jpg",
   "/img/mars/3.jpg",
+  "/img/mars/4.jpg",
+  "/img/mars/5.jpg",
+  "/img/mars/6.jpg",
+  "/img/mars/7.jpg",
 ];
 
 // =============================================================================
@@ -24,13 +28,13 @@ export const CAROUSEL_IMAGES = [
 // =============================================================================
 
 /** Duration the image is displayed at full opacity before fading out */
-export const DISPLAY_DURATION = 6000;
+export const DISPLAY_DURATION = 10000;
 
 /** Duration of the fade-out transition */
-export const FADE_OUT_DURATION = 5000;
+export const FADE_OUT_DURATION = 6000;
 
 /** Duration of the fade-in transition */
-export const FADE_IN_DURATION = 2000;
+export const FADE_IN_DURATION = 4000;
 
 /** Total duration of one complete carousel cycle */
 export const TOTAL_CYCLE_DURATION =
@@ -41,7 +45,7 @@ export const TOTAL_CYCLE_DURATION =
 // =============================================================================
 
 /** Translation speed in pixels per second */
-export const TRANSLATION_SPEED_PX_PER_SEC = 50;
+export const TRANSLATION_SPEED_PX_PER_SEC = 40;
 
 /** Default easing function for translation animations */
 export const DEFAULT_TRANSLATION_EASING: EasingFunction = "linear";
