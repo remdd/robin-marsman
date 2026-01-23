@@ -31,14 +31,14 @@ function NavLink({ href, children, isActive, prefersReducedMotion }: NavLinkProp
           <div className="absolute bottom-0 left-2 sm:left-3 md:left-4 right-2 sm:right-3 md:right-4 h-px bg-white" />
         )}
 
-        {/* Hover animation underline (only for non-active links, 1px height) */}
+        {/* Hover underline (only for non-active links, 1px height) */}
         {!isActive && (
           <div 
             className={classNames(
-              "absolute bottom-0 left-2 sm:left-3 md:left-4 h-px bg-white w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)]",
+              "absolute bottom-0 left-2 sm:left-3 md:left-4 h-px bg-white navigation-underline",
               prefersReducedMotion 
-                ? "transition-all duration-100 ease" // Gentle, quick transition for reduced motion
-                : "transition-all duration-300 ease-out" // Original smooth transition
+                ? "w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)]" // Instant appearance for reduced motion
+                : "w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)] transition-all duration-300 ease-out" // Smooth animation for regular users
             )}
           />
         )}

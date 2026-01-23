@@ -48,12 +48,35 @@
     animation-iteration-count: 1 !important;
   }
   
-  /* Remove transform animations but preserve layout */
+  /* Disable specific transform animations that can trigger motion sensitivity */
   * {
-    transform: none !important;
+    /* Disable translate animations but preserve static transforms */
+    animation-name: none !important;
   }
   
-  /* Allow only opacity and color transitions */
+  /* Remove transitions with transforms, but allow color/opacity changes */
+  * {
+    transition-property: opacity, color, background-color, border-color, text-decoration-color, fill, stroke !important;
+    transition-duration: var(--motion-duration-medium) !important;
+    transition-timing-function: var(--motion-easing) !important;
+  }
+  
+  /* Specifically disable width transitions on underlines */
+  .navigation-underline {
+    transition: none !important;
+    width: 0 !important;
+  }
+  
+  .navigation-underline:hover {
+    width: calc(100% - 1rem) !important;
+  }
+  
+  /* Override Tailwind's animate-spin */
+  .animate-spin {
+    animation: none !important;
+  }
+  
+  /* Allow only safe transitions for accessible components */
   .allow-reduced-motion-transition {
     transition: opacity var(--motion-duration-medium) var(--motion-easing),
                 color var(--motion-duration-fast) var(--motion-easing),
