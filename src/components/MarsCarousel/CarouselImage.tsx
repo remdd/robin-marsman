@@ -10,6 +10,7 @@ import {
   FADE_IN_TRANSITION,
   FADE_OUT_TRANSITION,
 } from "./config";
+import { useAnimationPreferences } from "../../hooks";
 import type { CarouselImageProps } from "./types";
 import classNames from "classnames";
 
@@ -17,9 +18,11 @@ import classNames from "classnames";
  * Individual carousel image component with corner-based scaling, positioning, rotation, and translation
  * Structure: position-wrapper > translation-wrapper > scale-wrapper (corner origin) > rotation-wrapper (center origin) > image
  * Optimized with React.memo and useMemo for performance
+ * Respects user's reduced motion preferences for accessibility
  */
 export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
   ({ imageState, alt, className = "" }) => {
+    const animationPrefs = useAnimationPreferences();
     // Safety check for scale factor
     const safeFactor = useMemo(
       () => Math.max(1, Math.min(10, imageState.scaleFactor || 1)),
@@ -62,15 +65,17 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
 
     // Memoize styles to prevent unnecessary recalculations
     // Use fade-in transition when opacity > 0 (fading in), fade-out when opacity === 0 (fading out)
+    // For reduced motion, use gentler, slower transitions
     const containerStyle = useMemo(
       () => ({
         opacity: imageState.opacity,
-        transition:
-          imageState.opacity > 0 ? FADE_IN_TRANSITION : FADE_OUT_TRANSITION,
+        transition: animationPrefs.prefersReducedMotion
+          ? `opacity ${Math.min(animationPrefs.maxSafeDuration * 20, 12000)}ms ease` // Slow, gentle fade (max 12s)
+          : (imageState.opacity > 0 ? FADE_IN_TRANSITION : FADE_OUT_TRANSITION),
         zIndex: 0,
         overflow: "hidden",
       }),
-      [imageState.opacity],
+      [imageState.opacity, animationPrefs.prefersReducedMotion, animationPrefs.maxSafeDuration],
     );
 
     const positionStyle = useMemo(
@@ -104,10 +109,11 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
       () => ({
         width: "100%",
         height: "100%",
-        transform: `rotate(${imageState.rotation}deg)`,
+        // Disable rotation for reduced motion users
+        transform: animationPrefs.disableMotion ? "rotate(0deg)" : `rotate(${imageState.rotation}deg)`,
         transformOrigin: "center center",
       }),
-      [imageState.rotation],
+      [imageState.rotation, animationPrefs.disableMotion],
     );
 
     const imageStyle = useMemo(

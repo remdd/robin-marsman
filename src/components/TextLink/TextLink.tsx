@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import classNames from "classnames";
+import { useAnimationPreferences } from "@/hooks";
 
 interface TextLinkProps {
   href: string;
@@ -14,8 +17,13 @@ export function TextLink({
   className = "",
   external = false,
 }: TextLinkProps) {
+  const animationPrefs = useAnimationPreferences();
+  
   const linkClasses = classNames(
-    "text-white tracking-wider inline-block transition-colors duration-200 hover:text-gray-300",
+    "text-white tracking-wider inline-block hover:text-gray-300",
+    animationPrefs.prefersReducedMotion 
+      ? "transition-colors duration-75" // Quick, gentle transition for reduced motion
+      : "transition-colors duration-200", // Original transition
     className,
   );
 

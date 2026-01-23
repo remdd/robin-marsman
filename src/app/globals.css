@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  
+  /* Motion preferences - default values for full animation */
+  --motion-duration-fast: 200ms;
+  --motion-duration-medium: 300ms;
+  --motion-duration-slow: 700ms;
+  --motion-easing: ease-out;
+  --motion-scale: 1;
 }
 
 @theme inline {
@@ -18,6 +25,39 @@
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    /* Reduce animation durations significantly */
+    --motion-duration-fast: 0ms;
+    --motion-duration-medium: 100ms;
+    --motion-duration-slow: 200ms;
+    --motion-easing: ease;
+    --motion-scale: 0;
+  }
+  
+  /* Disable problematic animations globally */
+  *,
+  *::before,
+  *::after {
+    animation-duration: var(--motion-duration-slow) !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+  
+  /* Remove transform animations but preserve layout */
+  * {
+    transform: none !important;
+  }
+  
+  /* Allow only opacity and color transitions */
+  .allow-reduced-motion-transition {
+    transition: opacity var(--motion-duration-medium) var(--motion-easing),
+                color var(--motion-duration-fast) var(--motion-easing),
+                background-color var(--motion-duration-fast) var(--motion-easing) !important;
   }
 }
 

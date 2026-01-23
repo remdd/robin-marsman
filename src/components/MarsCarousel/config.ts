@@ -41,6 +41,19 @@ export const TOTAL_CYCLE_DURATION =
   DISPLAY_DURATION + FADE_OUT_DURATION + FADE_IN_DURATION;
 
 // =============================================================================
+// Reduced Motion Animation Durations (accessibility)
+// =============================================================================
+
+/** Reduced motion: Longer display duration for comfortable viewing */
+export const REDUCED_MOTION_DISPLAY_DURATION = DISPLAY_DURATION * 2; // 20s
+
+/** Reduced motion: Gentle fade-out duration (maximum 12s) */
+export const REDUCED_MOTION_FADE_OUT_DURATION = Math.min(FADE_OUT_DURATION * 2, 12000); // 12s max
+
+/** Reduced motion: Gentle fade-in duration (maximum 12s) */
+export const REDUCED_MOTION_FADE_IN_DURATION = Math.min(FADE_IN_DURATION * 3, 12000); // 12s max
+
+// =============================================================================
 // Translation Animation Configuration
 // =============================================================================
 
@@ -59,6 +72,12 @@ export const FADE_IN_TRANSITION = `opacity ${FADE_IN_DURATION}ms cubic-bezier(0.
 
 /** CSS transition timing for fade-out (opacity 1 -> 0) */
 export const FADE_OUT_TRANSITION = `opacity ${FADE_OUT_DURATION}ms cubic-bezier(0.5, 0, 0.75, 0)`;
+
+/** Reduced motion: Gentle fade-in transition */
+export const REDUCED_MOTION_FADE_IN_TRANSITION = `opacity ${REDUCED_MOTION_FADE_IN_DURATION}ms ease`;
+
+/** Reduced motion: Gentle fade-out transition */
+export const REDUCED_MOTION_FADE_OUT_TRANSITION = `opacity ${REDUCED_MOTION_FADE_OUT_DURATION}ms ease`;
 
 // =============================================================================
 // Resize Handling Configuration
@@ -90,4 +109,27 @@ export const getTotalCycleDuration = (config: CarouselConfig): number => {
   return (
     config.displayDuration + config.fadeOutDuration + config.fadeInDuration
   );
+};
+
+/**
+ * Get animation durations based on user's motion preference
+ */
+export const getAnimationDurations = (prefersReducedMotion: boolean) => {
+  if (prefersReducedMotion) {
+    return {
+      displayDuration: REDUCED_MOTION_DISPLAY_DURATION,
+      fadeOutDuration: REDUCED_MOTION_FADE_OUT_DURATION,
+      fadeInDuration: REDUCED_MOTION_FADE_IN_DURATION,
+      fadeInTransition: REDUCED_MOTION_FADE_IN_TRANSITION,
+      fadeOutTransition: REDUCED_MOTION_FADE_OUT_TRANSITION,
+    };
+  }
+  
+  return {
+    displayDuration: DISPLAY_DURATION,
+    fadeOutDuration: FADE_OUT_DURATION,
+    fadeInDuration: FADE_IN_DURATION,
+    fadeInTransition: FADE_IN_TRANSITION,
+    fadeOutTransition: FADE_OUT_TRANSITION,
+  };
 };

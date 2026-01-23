@@ -3,14 +3,16 @@
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { TextLink } from "@/components/TextLink";
+import { useAnimationPreferences } from "@/hooks";
 
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   isActive: boolean;
+  prefersReducedMotion: boolean;
 }
 
-function NavLink({ href, children, isActive }: NavLinkProps) {
+function NavLink({ href, children, isActive, prefersReducedMotion }: NavLinkProps) {
   return (
     <li className="relative">
       <TextLink
@@ -31,7 +33,14 @@ function NavLink({ href, children, isActive }: NavLinkProps) {
 
         {/* Hover animation underline (only for non-active links, 1px height) */}
         {!isActive && (
-          <div className="absolute bottom-0 left-2 sm:left-3 md:left-4 h-px bg-white w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)] transition-all duration-300 ease-out" />
+          <div 
+            className={classNames(
+              "absolute bottom-0 left-2 sm:left-3 md:left-4 h-px bg-white w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)]",
+              prefersReducedMotion 
+                ? "transition-all duration-100 ease" // Gentle, quick transition for reduced motion
+                : "transition-all duration-300 ease-out" // Original smooth transition
+            )}
+          />
         )}
       </TextLink>
     </li>
@@ -40,6 +49,7 @@ function NavLink({ href, children, isActive }: NavLinkProps) {
 
 export function Navigation() {
   const pathname = usePathname();
+  const animationPrefs = useAnimationPreferences();
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -59,7 +69,12 @@ export function Navigation() {
           const isActive = normalizedPathname === href;
 
           return (
-            <NavLink key={href} href={href} isActive={isActive}>
+            <NavLink 
+              key={href} 
+              href={href} 
+              isActive={isActive}
+              prefersReducedMotion={animationPrefs.prefersReducedMotion}
+            >
               {label}
             </NavLink>
           );

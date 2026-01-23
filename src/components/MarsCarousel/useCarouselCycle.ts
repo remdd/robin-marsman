@@ -10,14 +10,17 @@ import {
   getRandomTranslationVector,
 } from "./utils";
 import { useViewportSize } from "./useViewportSize";
+import { useAnimationPreferences } from "../../hooks";
 
 /**
  * Custom hook for managing Mars carousel timing and state transitions
+ * Respects user's motion preferences for accessibility
  */
 export const useCarouselCycle = (config: CarouselConfig) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const { viewportSize, isResizing } = useViewportSize();
   const wasResizingRef = useRef(false);
+  const animationPrefs = useAnimationPreferences();
 
   const [state, setState] = useState<CarouselState>(() => {
     // Initialize with a static state to prevent hydration mismatch
@@ -48,15 +51,18 @@ export const useCarouselCycle = (config: CarouselConfig) => {
 
   /**
    * Initialize with random values after hydration
+   * Respects reduced motion preferences
    */
   useEffect(() => {
     const scaleFactor = getScaleFactorForViewport();
     const position = getRandomCorner();
-    const translationVector = getRandomTranslationVector(position);
+    const translationVector = animationPrefs.disableMotion 
+      ? { x: 0, y: 0 } 
+      : getRandomTranslationVector(position);
 
     const initialImage: ImageState = {
       src: config.images[0],
-      rotation: getRandomRotation(),
+      rotation: animationPrefs.disableMotion ? 0 : getRandomRotation(),
       position,
       opacity: 0, // Start with opacity 0 for fade-in effect
       scaleFactor,
@@ -72,7 +78,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     });
 
     setIsInitialized(true);
-  }, [config.images, getScaleFactorForViewport]);
+  }, [config.images, getScaleFactorForViewport, animationPrefs.disableMotion]);
 
   /**
    * Fade in the first image after initialization
@@ -133,7 +139,9 @@ export const useCarouselCycle = (config: CarouselConfig) => {
       // Resizing just ended - start fresh with a new image fading in
       const scaleFactor = getScaleFactorForViewport();
       const position = getRandomCorner();
-      const translationVector = getRandomTranslationVector(position);
+      const translationVector = animationPrefs.disableMotion
+        ? { x: 0, y: 0 }
+        : getRandomTranslationVector(position);
       const nextIndex = getNextImageIndex(
         state.imageIndex,
         config.images.length,
@@ -141,7 +149,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
 
       const freshImage: ImageState = {
         src: config.images[nextIndex],
-        rotation: getRandomRotation(),
+        rotation: animationPrefs.disableMotion ? 0 : getRandomRotation(),
         position,
         opacity: 0, // Start with opacity 0 for fade-in
         scaleFactor,
@@ -164,20 +172,24 @@ export const useCarouselCycle = (config: CarouselConfig) => {
     config.images,
     state.imageIndex,
     getScaleFactorForViewport,
+    animationPrefs.disableMotion,
   ]);
 
   /**
    * Creates a new random image state for the next image
+   * Respects reduced motion preferences
    */
   const createNextImageState = useCallback(
     (imageIndex: number): ImageState => {
       const scaleFactor = getScaleFactorForViewport();
       const position = getRandomCorner();
-      const translationVector = getRandomTranslationVector(position);
+      const translationVector = animationPrefs.disableMotion
+        ? { x: 0, y: 0 }
+        : getRandomTranslationVector(position);
 
       return {
         src: config.images[imageIndex],
-        rotation: getRandomRotation(),
+        rotation: animationPrefs.disableMotion ? 0 : getRandomRotation(),
         position,
         opacity: 0,
         scaleFactor,
@@ -185,7 +197,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
         animationStartTime: performance.now(), // Start animation immediately
       };
     },
-    [config.images, getScaleFactorForViewport],
+    [config.images, getScaleFactorForViewport, animationPrefs.disableMotion],
   );
 
   /**
@@ -275,13 +287,19 @@ export const useCarouselCycle = (config: CarouselConfig) => {
 
       switch (state.phase) {
         case "displaying":
-          delay = config.displayDuration;
+          delay = animationPrefs.prefersReducedMotion 
+            ? config.displayDuration * 2  // Double the display time for reduced motion
+            : config.displayDuration;
           break;
         case "fading-out":
-          delay = config.fadeOutDuration;
+          delay = animationPrefs.prefersReducedMotion
+            ? Math.min(config.fadeOutDuration * 2, 12000)  // Slower, max 12s
+            : config.fadeOutDuration;
           break;
         case "fading-in":
-          delay = config.fadeInDuration;
+          delay = animationPrefs.prefersReducedMotion
+            ? Math.min(config.fadeInDuration * 3, 12000)  // Much slower, max 12s
+            : config.fadeInDuration;
           break;
         default:
           delay = config.displayDuration;
@@ -300,7 +318,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
         clearTimeout(timeoutId);
       }
     };
-  }, [state.phase, advancePhase, config, isInitialized]);
+  }, [state.phase, advancePhase, config, isInitialized, animationPrefs.prefersReducedMotion]);
 
   return {
     currentImage: state.currentImage,

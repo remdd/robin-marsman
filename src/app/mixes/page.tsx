@@ -10,9 +10,9 @@ export default function Mixes() {
   return (
     <PageContainer>
       <H1>mixes</H1>
-      <H2>Selected DJ sets from Mixcloud</H2>
+      <H2>Selected DJ sets</H2>
       <BodyText>
-        Head over to{" "}
+        Follow on{" "}
         <TextLink
           href="https://www.mixcloud.com/robinmarsman/"
           external
@@ -20,7 +20,7 @@ export default function Mixes() {
         >
           Mixcloud
         </TextLink>{" "}
-        for more and to follow.
+        for more.
       </BodyText>
 
       <H3>Red Mars Radio [0]</H3>
