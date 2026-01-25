@@ -9,6 +9,10 @@ interface TextLinkProps {
   children: React.ReactNode;
   className?: string;
   external?: boolean;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 export function TextLink({
@@ -16,6 +20,10 @@ export function TextLink({
   children,
   className = "",
   external = false,
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
 }: TextLinkProps) {
   const animationPrefs = useAnimationPreferences();
   
@@ -34,6 +42,10 @@ export function TextLink({
         target="_blank"
         rel="noopener noreferrer"
         className={linkClasses}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+        onFocus={onFocus}
+        onBlur={onBlur}
       >
         {children}
       </a>
@@ -41,7 +53,14 @@ export function TextLink({
   }
 
   return (
-    <Link href={href} className={linkClasses}>
+    <Link 
+      href={href} 
+      className={linkClasses}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onFocus={onFocus}
+      onBlur={onBlur}
+    >
       {children}
     </Link>
   );
