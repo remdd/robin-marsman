@@ -9,15 +9,16 @@ export default function About() {
     <PageContainer>
       <H1>about</H1>
       <BodyText>
-        Robin Marsman is a DJ and electronic music producer based in Leicester,
-        UK.
+        Robin Marsman is a DJ, electronic music producer and modular synth
+        addict based in Leicester, UK. He is also a father, a software monkey
+        and occasionally even more.
       </BodyText>
       <Image
         src={getAssetPath("/img/robin-marsman.jpg")}
         alt="Robin Marsman"
         width={800}
         height={800}
-        className="rounded-lg mb-8 w-80"
+        className="rounded-lg mb-8 w-80 shadow-xl border-2 border-white "
         priority
       />
     </PageContainer>
