@@ -1,6 +1,7 @@
 import { PageContainer } from "@/components/PageContainer";
 import { H1 } from "@/components/H1";
 import { Textbox } from "@/components/Textbox/Textbox";
+import { SocialLinks } from "@/components/SocialLinks";
 
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
       <Textbox>
         Debut album <strong>"Red world dawning"</strong> coming soon
       </Textbox>
+      <SocialLinks />
     </PageContainer>
   );
 }

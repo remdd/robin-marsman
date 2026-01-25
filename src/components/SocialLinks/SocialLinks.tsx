@@ -1,0 +1,74 @@
+"use client";
+
+import Image from "next/image";
+import { TextLink } from "@/components/TextLink/TextLink";
+import { useAnimationPreferences } from "@/hooks";
+import { getAssetPath } from "@/utils/paths";
+import classNames from "classnames";
+
+interface SocialLink {
+  href: string;
+  icon: string;
+  label: string;
+}
+
+const socialLinks: SocialLink[] = [
+  {
+    href: "mailto:robinmarsman@proton.me",
+    icon: "/icons/email.svg",
+    label: "Email",
+  },
+  {
+    href: "https://robinmarsman.bandcamp.com/",
+    icon: "/icons/bandcamp.svg",
+    label: "Bandcamp",
+  },
+  {
+    href: "https://www.mixcloud.com/robinmarsman/",
+    icon: "/icons/mixcloud.svg",
+    label: "Mixcloud",
+  },
+  {
+    href: "https://www.facebook.com/people/Robin-Marsman/61587173637583/",
+    icon: "/icons/facebook.svg",
+    label: "Facebook",
+  },
+];
+
+export function SocialLinks() {
+  const animationPrefs = useAnimationPreferences();
+
+  return (
+    <div className="flex gap-4 sm:gap-6 justify-center items-center mt-8">
+      {socialLinks.map((link) => {
+        const transformClasses = classNames(
+          "flex items-center justify-center",
+          animationPrefs.prefersReducedMotion 
+            ? "" // No scale animation for reduced motion
+            : "hover:scale-95 transition-transform duration-200"
+        );
+
+        return (
+          <TextLink
+            key={link.label}
+            href={link.href}
+            external={!link.href.startsWith("mailto:")}
+            className={transformClasses}
+          >
+            <Image
+              src={getAssetPath(link.icon)}
+              alt={link.label}
+              width={48}
+              height={48}
+              className="w-10 h-10 sm:w-12 sm:h-12 text-white"
+              style={{
+                filter: "invert(1) brightness(1)",
+              }}
+            />
+            <span className="sr-only">{link.label}</span>
+          </TextLink>
+        );
+      })}
+    </div>
+  );
+}
