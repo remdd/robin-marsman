@@ -16,9 +16,9 @@
 
 ## Pages
 
-- [ ] Mixes
+- [x] Mixes
 - [ ] Productions
-- [ ] About
+- [x] About
 
 ## Misc
 
