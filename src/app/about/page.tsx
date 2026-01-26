@@ -1,7 +1,11 @@
+import { Metadata } from "next";
 import { PageContainer } from "@/components/PageContainer";
 import { H1 } from "@/components/H1";
 import { BodyText } from "@/components/BodyText";
 import { ProfileImage } from "@/components/ProfileImage";
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = createPageMetadata("about");
 
 export default function About() {
   return (

@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { PageContainer } from "@/components/PageContainer";
 import { MixcloudEmbed } from "@/components/MixcloudEmbed";
 import { H1 } from "@/components/H1";
@@ -5,6 +6,9 @@ import { BodyText } from "@/components/BodyText";
 import { H2 } from "@/components/H2";
 import { H3 } from "@/components/H3";
 import { TextLink } from "@/components/TextLink";
+import { createPageMetadata } from "@/lib/metadata";
+
+export const metadata: Metadata = createPageMetadata("mixes");
 
 export default function Mixes() {
   return (

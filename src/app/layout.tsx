@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Michroma, Jura } from "next/font/google";
 import { MarsCarousel } from "@/components/MarsCarousel";
 import { Navigation } from "@/components/Navigation";
+import { defaultMetadata, structuredData } from "@/lib/metadata";
 import classNames from "classnames";
 import "./globals.css";
 
@@ -34,11 +35,7 @@ const jura = Jura({
   preload: true, // Critical for body text
 });
 
-export const metadata: Metadata = {
-  title: "Robin Marsman - DJ and music production website",
-  description:
-    "Audio and info from Robin Marsman, UK-based DJ and electronic music producer.",
-};
+export const metadata: Metadata = defaultMetadata;
 
 export default function RootLayout({
   children,
@@ -47,6 +44,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        {/* Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData.person),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData.website),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData.organization),
+          }}
+        />
+      </head>
       <body
         className={classNames(
           geistSans.variable,

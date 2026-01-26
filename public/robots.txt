@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://robin-marsman.github.io/sitemap.xml
+
+# Specific crawling guidelines for music content
+Allow: /productions
+Allow: /mixes
+Allow: /about
+
+# Prevent crawling of development files
+Disallow: /_next/
+Disallow: /api/
+
+# Cache friendly for music discovery
+Crawl-delay: 1
