@@ -1,8 +1,7 @@
 import { PageContainer } from "@/components/PageContainer";
 import { H1 } from "@/components/H1";
 import { BodyText } from "@/components/BodyText";
-import Image from "next/image";
-import { getAssetPath } from "@/utils/paths";
+import { ProfileImage } from "@/components/ProfileImage";
 
 export default function About() {
   return (
@@ -13,14 +12,7 @@ export default function About() {
         addict based in Leicester, UK. He is also a father, a software monkey
         and occasionally even more besides.
       </BodyText>
-      <Image
-        src={getAssetPath("/img/robin-marsman.jpg")}
-        alt="Robin Marsman"
-        width={800}
-        height={800}
-        className="rounded-lg mb-8 w-80 shadow-xl border-2 border-white"
-        priority
-      />
+      <ProfileImage />
     </PageContainer>
   );
 }

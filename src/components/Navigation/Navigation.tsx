@@ -3,16 +3,18 @@
 import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { TextLink } from "@/components/TextLink";
-import { useAnimationPreferences } from "@/hooks";
+import { useAnimationPreferences, useNavigationPreloading } from "@/hooks";
 
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   isActive: boolean;
   prefersReducedMotion: boolean;
+  onMouseEnter?: () => void;
+  onFocus?: () => void;
 }
 
-function NavLink({ href, children, isActive, prefersReducedMotion }: NavLinkProps) {
+function NavLink({ href, children, isActive, prefersReducedMotion, onMouseEnter, onFocus }: NavLinkProps) {
   return (
     <li className="relative">
       <TextLink
@@ -23,6 +25,8 @@ function NavLink({ href, children, isActive, prefersReducedMotion }: NavLinkProp
             "text-white hover:text-white": isActive,
           },
         )}
+        onMouseEnter={onMouseEnter}
+        onFocus={onFocus}
       >
         {children}
 
@@ -50,6 +54,7 @@ function NavLink({ href, children, isActive, prefersReducedMotion }: NavLinkProp
 export function Navigation() {
   const pathname = usePathname();
   const animationPrefs = useAnimationPreferences();
+  const { preloadRoute } = useNavigationPreloading();
 
   const navItems = [
     { href: "/", label: "Home" },
@@ -74,6 +79,8 @@ export function Navigation() {
               href={href} 
               isActive={isActive}
               prefersReducedMotion={animationPrefs.prefersReducedMotion}
+              onMouseEnter={() => preloadRoute(href)}
+              onFocus={() => preloadRoute(href)}
             >
               {label}
             </NavLink>
