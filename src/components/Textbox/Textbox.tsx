@@ -7,7 +7,9 @@ interface TextboxProps {
 
 export function Textbox({ children, className = "" }: TextboxProps) {
   return (
-    <p className={classNames("py-4 px-8 bg-white text-lg", className)}>
+    <p
+      className={classNames("bg-white px-8 py-4 text-lg text-black", className)}
+    >
       {children}
     </p>
   );

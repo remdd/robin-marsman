@@ -56,8 +56,8 @@ export const useCarouselCycle = (config: CarouselConfig) => {
   useEffect(() => {
     const scaleFactor = getScaleFactorForViewport();
     const position = getRandomCorner();
-    const translationVector = animationPrefs.disableMotion 
-      ? { x: 0, y: 0 } 
+    const translationVector = animationPrefs.disableMotion
+      ? { x: 0, y: 0 }
       : getRandomTranslationVector(position);
 
     const initialImage: ImageState = {
@@ -144,7 +144,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
         : getRandomTranslationVector(position);
       const nextIndex = getNextImageIndex(
         state.imageIndex,
-        config.images.length,
+        config.images.length
       );
 
       const freshImage: ImageState = {
@@ -197,7 +197,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
         animationStartTime: performance.now(), // Start animation immediately
       };
     },
-    [config.images, getScaleFactorForViewport, animationPrefs.disableMotion],
+    [config.images, getScaleFactorForViewport, animationPrefs.disableMotion]
   );
 
   /**
@@ -224,7 +224,7 @@ export const useCarouselCycle = (config: CarouselConfig) => {
           // Start fade-in phase with next image (opacity starts at 0)
           const nextIndex = getNextImageIndex(
             prevState.imageIndex,
-            config.images.length,
+            config.images.length
           );
           const nextImage = createNextImageState(nextIndex);
 
@@ -287,18 +287,18 @@ export const useCarouselCycle = (config: CarouselConfig) => {
 
       switch (state.phase) {
         case "displaying":
-          delay = animationPrefs.prefersReducedMotion 
-            ? config.displayDuration * 2  // Double the display time for reduced motion
+          delay = animationPrefs.prefersReducedMotion
+            ? config.displayDuration * 2 // Double the display time for reduced motion
             : config.displayDuration;
           break;
         case "fading-out":
           delay = animationPrefs.prefersReducedMotion
-            ? Math.min(config.fadeOutDuration * 2, 12000)  // Slower, max 12s
+            ? Math.min(config.fadeOutDuration * 2, 12000) // Slower, max 12s
             : config.fadeOutDuration;
           break;
         case "fading-in":
           delay = animationPrefs.prefersReducedMotion
-            ? Math.min(config.fadeInDuration * 3, 12000)  // Much slower, max 12s
+            ? Math.min(config.fadeInDuration * 3, 12000) // Much slower, max 12s
             : config.fadeInDuration;
           break;
         default:
@@ -318,7 +318,13 @@ export const useCarouselCycle = (config: CarouselConfig) => {
         clearTimeout(timeoutId);
       }
     };
-  }, [state.phase, advancePhase, config, isInitialized, animationPrefs.prefersReducedMotion]);
+  }, [
+    state.phase,
+    advancePhase,
+    config,
+    isInitialized,
+    animationPrefs.prefersReducedMotion,
+  ]);
 
   return {
     currentImage: state.currentImage,

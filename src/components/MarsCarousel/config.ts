@@ -79,10 +79,16 @@ export const TOTAL_CYCLE_DURATION =
 export const REDUCED_MOTION_DISPLAY_DURATION = DISPLAY_DURATION * 2; // 20s
 
 /** Reduced motion: Gentle fade-out duration (maximum 12s) */
-export const REDUCED_MOTION_FADE_OUT_DURATION = Math.min(FADE_OUT_DURATION * 2, 12000); // 12s max
+export const REDUCED_MOTION_FADE_OUT_DURATION = Math.min(
+  FADE_OUT_DURATION * 2,
+  12000
+); // 12s max
 
 /** Reduced motion: Gentle fade-in duration (maximum 12s) */
-export const REDUCED_MOTION_FADE_IN_DURATION = Math.min(FADE_IN_DURATION * 3, 12000); // 12s max
+export const REDUCED_MOTION_FADE_IN_DURATION = Math.min(
+  FADE_IN_DURATION * 3,
+  12000
+); // 12s max
 
 // =============================================================================
 // Translation Animation Configuration
@@ -155,7 +161,7 @@ export const getAnimationDurations = (prefersReducedMotion: boolean) => {
       fadeOutTransition: REDUCED_MOTION_FADE_OUT_TRANSITION,
     };
   }
-  
+
   return {
     displayDuration: DISPLAY_DURATION,
     fadeOutDuration: FADE_OUT_DURATION,

@@ -18,12 +18,12 @@ export function ProfileImage({ className = "" }: ProfileImageProps) {
     <div className={classNames("relative", className)}>
       {/* Placeholder/skeleton while loading */}
       {!imageLoaded && (
-        <div 
-          className="w-80 h-80 bg-gray-800/40 rounded-lg mb-8 shadow-xl border-2 border-white/20"
+        <div
+          className="mb-8 h-80 w-80 rounded-lg border-2 border-white/20 bg-gray-800/40 shadow-xl"
           aria-hidden="true"
         />
       )}
-      
+
       {/* Actual image with fade-in transition */}
       <Image
         src={getAssetPath("/img/robin-marsman.jpg")}
@@ -31,14 +31,14 @@ export function ProfileImage({ className = "" }: ProfileImageProps) {
         width={800}
         height={800}
         className={classNames(
-          "rounded-lg mb-8 w-80 shadow-xl border-2 border-white",
+          "mb-8 w-80 rounded-lg border-2 border-white shadow-xl",
           // Respect motion preferences for transitions
-          animationPrefs.prefersReducedMotion 
+          animationPrefs.prefersReducedMotion
             ? "" // No transition for reduced motion
             : "transition-opacity duration-500 ease-out", // Smooth fade for normal users
           imageLoaded ? "opacity-100" : "opacity-0",
           // Position absolute when loading to overlay the placeholder
-          imageLoaded ? "relative" : "absolute top-0 left-0"
+          imageLoaded ? "relative" : "absolute left-0 top-0"
         )}
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageLoaded(true)} // Show even if there's an error

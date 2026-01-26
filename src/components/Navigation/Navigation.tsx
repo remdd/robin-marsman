@@ -14,16 +14,23 @@ interface NavLinkProps {
   onFocus?: () => void;
 }
 
-function NavLink({ href, children, isActive, prefersReducedMotion, onMouseEnter, onFocus }: NavLinkProps) {
+function NavLink({
+  href,
+  children,
+  isActive,
+  prefersReducedMotion,
+  onMouseEnter,
+  onFocus,
+}: NavLinkProps) {
   return (
     <li className="relative">
       <TextLink
         href={href}
         className={classNames(
-          "group relative text-sm sm:text-base md:text-lg py-2 px-2 sm:px-3 md:px-4",
+          "group relative px-2 py-2 text-sm sm:px-3 sm:text-base md:px-4 md:text-lg",
           {
             "text-white hover:text-white": isActive,
-          },
+          }
         )}
         onMouseEnter={onMouseEnter}
         onFocus={onFocus}
@@ -32,17 +39,17 @@ function NavLink({ href, children, isActive, prefersReducedMotion, onMouseEnter,
 
         {/* Current page underline (always visible with 1px height) */}
         {isActive && (
-          <div className="absolute bottom-0 left-2 sm:left-3 md:left-4 right-2 sm:right-3 md:right-4 h-px bg-white" />
+          <div className="absolute bottom-0 left-2 right-2 h-px bg-white sm:left-3 sm:right-3 md:left-4 md:right-4" />
         )}
 
         {/* Hover underline (only for non-active links, 1px height) */}
         {!isActive && (
-          <div 
+          <div
             className={classNames(
-              "absolute bottom-0 left-2 sm:left-3 md:left-4 h-px bg-white navigation-underline",
-              prefersReducedMotion 
+              "navigation-underline absolute bottom-0 left-2 h-px bg-white sm:left-3 md:left-4",
+              prefersReducedMotion
                 ? "w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)]" // Instant appearance for reduced motion
-                : "w-0 group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)] transition-all duration-300 ease-out" // Smooth animation for regular users
+                : "w-0 transition-all duration-300 ease-out group-hover:w-[calc(100%-1rem)] sm:group-hover:w-[calc(100%-1.5rem)] md:group-hover:w-[calc(100%-2rem)]" // Smooth animation for regular users
             )}
           />
         )}
@@ -68,15 +75,15 @@ export function Navigation() {
     pathname === "/" ? "/" : pathname.replace(/\/$/, "");
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-20 py-4 sm:py-6 md:py-8 px-4">
+    <nav className="fixed left-0 right-0 top-0 z-20 px-4 py-4 sm:py-6 md:py-8">
       <ul className="flex flex-wrap justify-center gap-x-2 gap-y-2 sm:gap-x-4 md:gap-x-8">
         {navItems.map(({ href, label }) => {
           const isActive = normalizedPathname === href;
 
           return (
-            <NavLink 
-              key={href} 
-              href={href} 
+            <NavLink
+              key={href}
+              href={href}
               isActive={isActive}
               prefersReducedMotion={animationPrefs.prefersReducedMotion}
               onMouseEnter={() => preloadRoute(href)}

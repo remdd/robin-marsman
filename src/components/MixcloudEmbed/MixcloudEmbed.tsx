@@ -18,16 +18,16 @@ export function MixcloudEmbed({ src, className = "" }: MixcloudEmbedProps) {
   };
 
   return (
-    <div className={classNames("max-w-3xl w-full mb-16 relative", className)}>
+    <div className={classNames("relative mb-16 w-full max-w-3xl", className)}>
       {/* Loading indicator */}
       {isLoading && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded">
+        <div className="absolute inset-0 flex items-center justify-center rounded bg-black bg-opacity-50">
           {animationPrefs.prefersReducedMotion ? (
             /* Static loading indicator for reduced motion */
-            <div className="w-2 h-2 bg-white rounded-full opacity-75" />
+            <div className="h-2 w-2 rounded-full bg-white opacity-75" />
           ) : (
             /* Spinning loader for regular motion */
-            <div className="w-8 h-8 border-4 border-white border-t-transparent rounded-full animate-spin" />
+            <div className="h-8 w-8 animate-spin rounded-full border-4 border-white border-t-transparent" />
           )}
         </div>
       )}
@@ -39,7 +39,7 @@ export function MixcloudEmbed({ src, className = "" }: MixcloudEmbedProps) {
         src={src}
         allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"
         onLoad={handleLoad}
-        className="rounded shadow-lg bg-black"
+        className="rounded bg-black shadow-lg"
       />
     </div>
   );

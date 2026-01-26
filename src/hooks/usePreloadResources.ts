@@ -1,10 +1,10 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef } from "react";
 
 type PreloadableResource = {
   href: string;
-  as?: 'image' | 'script' | 'style' | 'font';
+  as?: "image" | "script" | "style" | "font";
   type?: string;
-  crossOrigin?: 'anonymous' | 'use-credentials';
+  crossOrigin?: "anonymous" | "use-credentials";
 };
 
 /**
@@ -13,43 +13,53 @@ type PreloadableResource = {
 export function usePreloadResources() {
   const preloadedResources = useRef(new Set<string>());
 
-  const preloadResource = useCallback((resource: PreloadableResource | string) => {
-    const resourceConfig = typeof resource === 'string' 
-      ? { href: resource, as: 'image' as const }
-      : resource;
+  const preloadResource = useCallback(
+    (resource: PreloadableResource | string) => {
+      const resourceConfig =
+        typeof resource === "string"
+          ? { href: resource, as: "image" as const }
+          : resource;
 
-    const { href, as = 'image', type, crossOrigin } = resourceConfig;
+      const { href, as = "image", type, crossOrigin } = resourceConfig;
 
-    // Avoid duplicate preloads
-    if (preloadedResources.current.has(href)) {
-      return;
-    }
+      // Avoid duplicate preloads
+      if (preloadedResources.current.has(href)) {
+        return;
+      }
 
-    try {
-      // Create prefetch link element
-      const link = document.createElement('link');
-      link.rel = 'prefetch';
-      link.href = href;
-      
-      if (as) link.as = as;
-      if (type) link.type = type;
-      if (crossOrigin) link.crossOrigin = crossOrigin;
+      try {
+        // Create prefetch link element
+        const link = document.createElement("link");
+        link.rel = "prefetch";
+        link.href = href;
 
-      document.head.appendChild(link);
-      preloadedResources.current.add(href);
-    } catch (error) {
-      // Silently handle preload failures
-      console.warn('Failed to preload resource:', href, error);
-    }
-  }, []);
+        if (as) link.as = as;
+        if (type) link.type = type;
+        if (crossOrigin) link.crossOrigin = crossOrigin;
 
-  const preloadMultipleResources = useCallback((resources: (PreloadableResource | string)[]) => {
-    resources.forEach(resource => preloadResource(resource));
-  }, [preloadResource]);
+        document.head.appendChild(link);
+        preloadedResources.current.add(href);
+      } catch (error) {
+        // Silently handle preload failures
+        console.warn("Failed to preload resource:", href, error);
+      }
+    },
+    []
+  );
+
+  const preloadMultipleResources = useCallback(
+    (resources: (PreloadableResource | string)[]) => {
+      resources.forEach((resource) => preloadResource(resource));
+    },
+    [preloadResource]
+  );
 
   return {
     preloadResource,
     preloadMultipleResources,
-    isPreloaded: useCallback((href: string) => preloadedResources.current.has(href), []),
+    isPreloaded: useCallback(
+      (href: string) => preloadedResources.current.has(href),
+      []
+    ),
   };
 }

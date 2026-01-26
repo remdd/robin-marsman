@@ -27,7 +27,7 @@ export const getRandomCorner = (): CornerPosition => {
  */
 export const getCornerTransform = (
   corner: CornerPosition,
-  rotation: Rotation,
+  rotation: Rotation
 ): string => {
   // Simple positioning: place image so it originates from the specified corner
   switch (corner) {
@@ -49,7 +49,7 @@ export const getCornerTransform = (
  */
 export const getCombinedTransform = (
   rotation: Rotation,
-  position: CornerPosition,
+  position: CornerPosition
 ): string => {
   const positionTransform = getCornerTransform(position, rotation);
   return `rotate(${rotation}deg) ${positionTransform}`;
@@ -60,7 +60,7 @@ export const getCombinedTransform = (
  */
 export const getNextImageIndex = (
   currentIndex: number,
-  totalImages: number,
+  totalImages: number
 ): number => {
   return (currentIndex + 1) % totalImages;
 };
@@ -72,7 +72,7 @@ export const getNextImageIndex = (
 export const calculateRequiredScale = (
   viewportWidth: number,
   viewportHeight: number,
-  baseImageSize: number = 1920,
+  baseImageSize: number = 1920
 ): number => {
   // Safety checks for invalid inputs
   if (
@@ -141,7 +141,7 @@ export const getTransformOrigin = (corner: CornerPosition): string => {
  */
 export const getScaledDimensions = (
   baseSize: number,
-  scaleFactor: number,
+  scaleFactor: number
 ): { width: number; height: number } => {
   const scaledSize = Math.round(baseSize * scaleFactor);
   return {
@@ -159,7 +159,7 @@ export const getScaledDimensions = (
  * - bottom-right: 180° to 270° (West to North)
  */
 export const getRandomTranslationVector = (
-  corner: CornerPosition,
+  corner: CornerPosition
 ): { x: number; y: number } => {
   const ranges = {
     "top-left": { minAngle: 0, maxAngle: 90 },
@@ -209,7 +209,7 @@ export const calculateTranslationOffset = (
   elapsedTime: number, // milliseconds since animation start
   totalDuration: number, // total animation duration in ms
   easing: EasingFunction = "linear", // default to linear (no easing)
-  speedPxPerSec: number = 10, // translation speed in pixels per second
+  speedPxPerSec: number = 10 // translation speed in pixels per second
 ): { x: number; y: number } => {
   const speedPxPerMs = speedPxPerSec / 1000;
 

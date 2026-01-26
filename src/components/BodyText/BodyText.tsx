@@ -9,8 +9,8 @@ export function BodyText({ children, className = "" }: BodyTextProps) {
   return (
     <p
       className={classNames(
-        "font-bold text-base text-lg sm:text-xl text-white leading-relaxed text-shadow-xs text-shadow-black mb-8",
-        className,
+        "text-shadow-xs text-shadow-black mb-8 text-base text-lg font-bold leading-relaxed text-white sm:text-xl",
+        className
       )}
     >
       {children}

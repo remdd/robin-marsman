@@ -5,20 +5,28 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 First, run the development server:
 
 ```bash
-yarn dev
-# or
 npm run dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3010](http://localhost:3010) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Code Formatting
+
+This project uses [Prettier](https://prettier.io/) with the [prettier-plugin-tailwindcss](https://github.com/tailwindlabs/prettier-plugin-tailwindcss) for automatic code formatting and Tailwind CSS class sorting.
+
+### Available Scripts
+
+- `npm run format` - Format all files with Prettier
+- `npm run format:check` - Check if all files are formatted correctly
+- `npm run format:staged` - Format staged files (for use with git hooks)
+
+### Editor Setup
+
+For the best development experience, configure your editor to format on save using the project's Prettier configuration.
 
 ## Learn More
 

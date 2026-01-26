@@ -41,23 +41,23 @@ export function SocialLinks() {
   const [hoveredLabel, setHoveredLabel] = useState<string | null>(null);
 
   const labelClasses = classNames(
-    "mt-4 text-center text-white text-sm tracking-wider min-h-[1.25rem]",
+    "mt-4 min-h-[1.25rem] text-center text-sm tracking-wider text-white",
     animationPrefs.prefersReducedMotion
       ? hoveredLabel
         ? "opacity-100"
         : "opacity-0" // Instant for reduced motion
-      : "transition-opacity duration-300", // Smooth fade for normal motion
+      : "transition-opacity duration-300" // Smooth fade for normal motion
   );
 
   return (
-    <div className="flex flex-col items-center mt-12">
-      <div className="flex gap-4 sm:gap-6 justify-center items-center">
+    <div className="mt-12 flex flex-col items-center">
+      <div className="flex items-center justify-center gap-4 sm:gap-6">
         {socialLinks.map((link) => {
           const transformClasses = classNames(
             "flex items-center justify-center",
             animationPrefs.prefersReducedMotion
               ? "" // No scale animation for reduced motion
-              : "hover:scale-90 transition-transform duration-200",
+              : "transition-transform duration-200 hover:scale-90"
           );
 
           return (
@@ -76,7 +76,7 @@ export function SocialLinks() {
                 alt={link.label}
                 width={48}
                 height={48}
-                className="w-10 h-10 sm:w-12 sm:h-12 text-white"
+                className="h-10 w-10 text-white sm:h-12 sm:w-12"
                 style={{
                   filter: "invert(1) brightness(1)",
                 }}

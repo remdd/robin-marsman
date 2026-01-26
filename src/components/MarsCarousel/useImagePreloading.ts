@@ -1,6 +1,9 @@
-import { useEffect } from 'react';
-import { getAssetPath } from '@/utils/paths';
-import { getOptimizedImagePath, type ImageVariant } from './useResponsiveImages';
+import { useEffect } from "react";
+import { getAssetPath } from "@/utils/paths";
+import {
+  getOptimizedImagePath,
+  type ImageVariant,
+} from "./useResponsiveImages";
 
 /**
  * Hook to preload carousel images for better performance
@@ -29,7 +32,7 @@ export function useImagePreloading(
       // Create a new image element to trigger browser preload
       const img = new Image();
       img.src = fullPath;
-      
+
       return new Promise<void>((resolve) => {
         img.onload = () => resolve();
         img.onerror = () => resolve(); // Don't fail on error, just continue
@@ -40,6 +43,5 @@ export function useImagePreloading(
     Promise.all(preloadPromises).catch(() => {
       // Silently handle preload failures
     });
-
   }, [currentImageIndex, totalImages, variant, isVisible]);
 }

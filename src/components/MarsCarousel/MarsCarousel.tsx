@@ -22,14 +22,14 @@ export const MarsCarousel: React.FC<MarsCarouselProps> = ({
   const [isClient, setIsClient] = useState(false);
   const { currentImage, nextImage, phase, isResizing } =
     useCarouselCycle(DEFAULT_CONFIG);
-  
+
   const imageVariant = useImageVariant();
-  
+
   // Get current image index for preloading
-  const currentImageIndex = currentImage ? CAROUSEL_IMAGES.findIndex(
-    (img) => img === currentImage.src
-  ) : 0;
-  
+  const currentImageIndex = currentImage
+    ? CAROUSEL_IMAGES.findIndex((img) => img === currentImage.src)
+    : 0;
+
   // Preload upcoming images for better performance
   useImagePreloading(
     currentImageIndex,

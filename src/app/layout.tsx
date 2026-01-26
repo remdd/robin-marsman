@@ -53,14 +53,14 @@ export default function RootLayout({
           geistMono.variable,
           michroma.variable,
           jura.variable,
-          "antialiased",
+          "antialiased"
         )}
       >
         {/* Fixed background layer */}
-        <div className="fixed inset-0 bg-black z-[-3]">
+        <div className="fixed inset-0 z-[-3] bg-black">
           <MarsCarousel />
         </div>
-        <div className="fixed inset-0 bg-black opacity-30 z-[-2]" />
+        <div className="fixed inset-0 z-[-2] bg-black opacity-30" />
         <div className="fixed inset-0 z-[-1] shadow-[inset_0_0_250px_100px_rgba(0,0,0,0.4)]" />
 
         {/* Fixed navigation */}
@@ -68,7 +68,7 @@ export default function RootLayout({
 
         {/* Scrollable content viewport with fade-out mask at top */}
         <div
-          className="fixed inset-0 top-[108px] overflow-y-auto z-10"
+          className="fixed inset-0 top-[108px] z-10 overflow-y-auto"
           style={{
             maskImage:
               "linear-gradient(to bottom, transparent 0px, black 10px)",

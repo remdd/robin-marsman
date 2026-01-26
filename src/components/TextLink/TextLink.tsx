@@ -26,13 +26,13 @@ export function TextLink({
   onBlur,
 }: TextLinkProps) {
   const animationPrefs = useAnimationPreferences();
-  
+
   const linkClasses = classNames(
-    "text-white tracking-wider inline-block hover:text-gray-300",
-    animationPrefs.prefersReducedMotion 
+    "inline-block tracking-wider text-white hover:text-gray-300",
+    animationPrefs.prefersReducedMotion
       ? "transition-colors duration-75" // Quick, gentle transition for reduced motion
       : "transition-colors duration-200", // Original transition
-    className,
+    className
   );
 
   if (external) {
@@ -53,8 +53,8 @@ export function TextLink({
   }
 
   return (
-    <Link 
-      href={href} 
+    <Link
+      href={href}
       className={linkClasses}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

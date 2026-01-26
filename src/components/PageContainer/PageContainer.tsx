@@ -18,9 +18,12 @@ export function PageContainer({
 
   useEffect(() => {
     // Trigger animation on mount
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, animationPrefs.prefersReducedMotion ? 10 : 50); // Faster for reduced motion
+    const timer = setTimeout(
+      () => {
+        setIsVisible(true);
+      },
+      animationPrefs.prefersReducedMotion ? 10 : 50
+    ); // Faster for reduced motion
 
     return () => clearTimeout(timer);
   }, [animationPrefs.prefersReducedMotion]);
@@ -28,18 +31,18 @@ export function PageContainer({
   return (
     <div
       className={classNames(
-        "flex flex-col items-center justify-items-start p-4 pt-16 sm:p-8 sm:pt-20 md:p-12 md:pt-24 lg:p-16 lg:pt-24 w-full md:w-10/12 lg:w-8/12 mx-auto max-w-[1024px] min-h-[60vh]",
-        animationPrefs.prefersReducedMotion 
-          ? "transition-opacity duration-100 ease" // Gentle, quick fade for reduced motion
+        "mx-auto flex min-h-[60vh] w-full max-w-[1024px] flex-col items-center justify-items-start p-4 pt-16 sm:p-8 sm:pt-20 md:w-10/12 md:p-12 md:pt-24 lg:w-8/12 lg:p-16 lg:pt-24",
+        animationPrefs.prefersReducedMotion
+          ? "ease transition-opacity duration-100" // Gentle, quick fade for reduced motion
           : "transition-opacity duration-700 ease-out", // Original smooth transition
-        className,
+        className
       )}
     >
       <div
         className={classNames(
           "w-full",
-          animationPrefs.prefersReducedMotion 
-            ? "transition-opacity duration-100 ease" // Only opacity transition for reduced motion
+          animationPrefs.prefersReducedMotion
+            ? "ease transition-opacity duration-100" // Only opacity transition for reduced motion
             : "transition-all duration-700 ease-out", // Full transition for regular motion
           {
             "opacity-100": isVisible,
@@ -50,7 +53,7 @@ export function PageContainer({
           }
         )}
       >
-        <div className="flex flex-col items-center text-center w-full">
+        <div className="flex w-full flex-col items-center text-center">
           {children}
         </div>
       </div>

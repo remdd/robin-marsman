@@ -5,7 +5,11 @@ import React, { useMemo } from "react";
 import { getAssetPath } from "@/utils/paths";
 import { getTransformOrigin } from "./utils";
 import { useTranslationAnimation } from "./useTranslationAnimation";
-import { useImageVariant, getOptimizedImagePath, getFallbackImagePath } from "./useResponsiveImages";
+import {
+  useImageVariant,
+  getOptimizedImagePath,
+  getFallbackImagePath,
+} from "./useResponsiveImages";
 import {
   BASE_IMAGE_SIZE,
   FADE_IN_TRANSITION,
@@ -25,11 +29,11 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
   ({ imageState, alt, className = "" }) => {
     const animationPrefs = useAnimationPreferences();
     const imageVariant = useImageVariant();
-    
+
     // Safety check for scale factor
     const safeFactor = useMemo(
       () => Math.max(1, Math.min(10, imageState.scaleFactor || 1)),
-      [imageState.scaleFactor],
+      [imageState.scaleFactor]
     );
 
     // Get current translation offset from animation hook
@@ -38,7 +42,9 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
     // Get optimized image source based on current variant
     const optimizedImageSrc = useMemo(() => {
       // Extract image number from src path (e.g., "/img/mars/1.jpg" -> 1)
-      const imageNumber = parseInt(imageState.src.split('/').pop()?.split('.')[0] || '1');
+      const imageNumber = parseInt(
+        imageState.src.split("/").pop()?.split(".")[0] || "1"
+      );
       return getOptimizedImagePath(imageNumber, imageVariant);
     }, [imageState.src, imageVariant]);
 
@@ -70,7 +76,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
     // Memoize transform origin for corner-based scaling
     const transformOrigin = useMemo(
       () => getTransformOrigin(imageState.position),
-      [imageState.position],
+      [imageState.position]
     );
 
     // Memoize styles to prevent unnecessary recalculations
@@ -81,11 +87,17 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
         opacity: imageState.opacity,
         transition: animationPrefs.prefersReducedMotion
           ? `opacity ${Math.min(animationPrefs.maxSafeDuration * 20, 12000)}ms ease` // Slow, gentle fade (max 12s)
-          : (imageState.opacity > 0 ? FADE_IN_TRANSITION : FADE_OUT_TRANSITION),
+          : imageState.opacity > 0
+            ? FADE_IN_TRANSITION
+            : FADE_OUT_TRANSITION,
         zIndex: 0,
         overflow: "hidden",
       }),
-      [imageState.opacity, animationPrefs.prefersReducedMotion, animationPrefs.maxSafeDuration],
+      [
+        imageState.opacity,
+        animationPrefs.prefersReducedMotion,
+        animationPrefs.maxSafeDuration,
+      ]
     );
 
     const positionStyle = useMemo(
@@ -95,14 +107,14 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
         left: "0",
         transform: `translate(${positionTransform.translateX}, ${positionTransform.translateY})`,
       }),
-      [positionTransform.translateX, positionTransform.translateY],
+      [positionTransform.translateX, positionTransform.translateY]
     );
 
     const translationStyle = useMemo(
       () => ({
         transform: `translate3d(${-translationOffset.x}px, ${-translationOffset.y}px, 0)`,
       }),
-      [translationOffset.x, translationOffset.y],
+      [translationOffset.x, translationOffset.y]
     );
 
     const scaleStyle = useMemo(
@@ -112,7 +124,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
         transform: `scale(${safeFactor})`,
         transformOrigin: transformOrigin,
       }),
-      [safeFactor, transformOrigin],
+      [safeFactor, transformOrigin]
     );
 
     const rotationStyle = useMemo(
@@ -120,10 +132,12 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
         width: "100%",
         height: "100%",
         // Disable rotation for reduced motion users
-        transform: animationPrefs.disableMotion ? "rotate(0deg)" : `rotate(${imageState.rotation}deg)`,
+        transform: animationPrefs.disableMotion
+          ? "rotate(0deg)"
+          : `rotate(${imageState.rotation}deg)`,
         transformOrigin: "center center",
       }),
-      [imageState.rotation, animationPrefs.disableMotion],
+      [imageState.rotation, animationPrefs.disableMotion]
     );
 
     const imageStyle = useMemo(
@@ -132,7 +146,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
         width: "100%",
         height: "100%",
       }),
-      [],
+      []
     );
 
     return (
@@ -154,7 +168,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
                   width={BASE_IMAGE_SIZE}
                   height={BASE_IMAGE_SIZE}
                   priority={imageState.opacity > 0}
-                  className="contrast-125 saturate-110 hue-rotate-345"
+                  className="saturate-110 hue-rotate-345 contrast-125"
                   style={imageStyle}
                   unoptimized
                 />
@@ -164,7 +178,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
         </div>
       </div>
     );
-  },
+  }
 );
 
 CarouselImage.displayName = "CarouselImage";

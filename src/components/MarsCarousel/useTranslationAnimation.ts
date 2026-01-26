@@ -34,7 +34,7 @@ export const useTranslationAnimation = (imageState: ImageState) => {
     if (prefersReducedMotion) {
       return { x: 0, y: 0 };
     }
-    
+
     if (!animationStartTime) {
       return { x: 0, y: 0 };
     }
@@ -45,7 +45,7 @@ export const useTranslationAnimation = (imageState: ImageState) => {
       elapsedTime,
       TOTAL_CYCLE_DURATION,
       easing,
-      TRANSLATION_SPEED_PX_PER_SEC,
+      TRANSLATION_SPEED_PX_PER_SEC
     );
   })();
 

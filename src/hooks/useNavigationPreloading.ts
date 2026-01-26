@@ -1,5 +1,5 @@
-import { usePreloadResources } from './usePreloadResources';
-import { getPreloadResourcesForRoute } from '@/utils/preloadConfig';
+import { usePreloadResources } from "./usePreloadResources";
+import { getPreloadResourcesForRoute } from "@/utils/preloadConfig";
 
 /**
  * Hook to handle navigation-based preloading
