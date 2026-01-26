@@ -15,11 +15,6 @@ interface SocialLink {
 
 const socialLinks: SocialLink[] = [
   {
-    href: "mailto:robinmarsman@proton.me",
-    icon: "/icons/email.svg",
-    label: "Email",
-  },
-  {
     href: "https://robinmarsman.bandcamp.com/",
     icon: "/icons/bandcamp.svg",
     label: "Bandcamp",
@@ -28,6 +23,11 @@ const socialLinks: SocialLink[] = [
     href: "https://www.mixcloud.com/robinmarsman/",
     icon: "/icons/mixcloud.svg",
     label: "Mixcloud",
+  },
+  {
+    href: "mailto:robinmarsman@proton.me",
+    icon: "/icons/email.svg",
+    label: "Email",
   },
   {
     href: "https://www.facebook.com/people/Robin-Marsman/61587173637583/",
@@ -57,7 +57,7 @@ export function SocialLinks() {
             "flex items-center justify-center",
             animationPrefs.prefersReducedMotion
               ? "" // No scale animation for reduced motion
-              : "hover:scale-95 transition-transform duration-200",
+              : "hover:scale-90 transition-transform duration-200",
           );
 
           return (

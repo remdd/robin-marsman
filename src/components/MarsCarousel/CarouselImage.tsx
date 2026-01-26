@@ -5,6 +5,7 @@ import React, { useMemo } from "react";
 import { getAssetPath } from "@/utils/paths";
 import { getTransformOrigin } from "./utils";
 import { useTranslationAnimation } from "./useTranslationAnimation";
+import { useImageVariant, getOptimizedImagePath, getFallbackImagePath } from "./useResponsiveImages";
 import {
   BASE_IMAGE_SIZE,
   FADE_IN_TRANSITION,
@@ -23,6 +24,8 @@ import classNames from "classnames";
 export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
   ({ imageState, alt, className = "" }) => {
     const animationPrefs = useAnimationPreferences();
+    const imageVariant = useImageVariant();
+    
     // Safety check for scale factor
     const safeFactor = useMemo(
       () => Math.max(1, Math.min(10, imageState.scaleFactor || 1)),
@@ -31,6 +34,13 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
 
     // Get current translation offset from animation hook
     const translationOffset = useTranslationAnimation(imageState);
+
+    // Get optimized image source based on current variant
+    const optimizedImageSrc = useMemo(() => {
+      // Extract image number from src path (e.g., "/img/mars/1.jpg" -> 1)
+      const imageNumber = parseInt(imageState.src.split('/').pop()?.split('.')[0] || '1');
+      return getOptimizedImagePath(imageNumber, imageVariant);
+    }, [imageState.src, imageVariant]);
 
     // Memoize position calculations to avoid recalculation on every render
     const positionTransform = useMemo(() => {
@@ -139,7 +149,7 @@ export const CarouselImage: React.FC<CarouselImageProps> = React.memo(
               {/* Rotation wrapper - rotates from center of scaled image */}
               <div style={rotationStyle}>
                 <Image
-                  src={getAssetPath(imageState.src)}
+                  src={getAssetPath(optimizedImageSrc)}
                   alt={alt}
                   width={BASE_IMAGE_SIZE}
                   height={BASE_IMAGE_SIZE}

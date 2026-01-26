@@ -9,25 +9,11 @@
    id="Layer_1"
    viewBox="-337 273 400 400"
    xml:space="preserve"
-   sodipodi:docname="facebook-svgrepo-com.svg"
-   inkscape:export-filename="facebook.svg"
-   inkscape:export-xdpi="96"
-   inkscape:export-ydpi="96"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs631" /><sodipodi:namedview
-   id="namedview629"
-   pagecolor="#ffffff"
-   bordercolor="#000000"
-   borderopacity="0.25"
-   inkscape:showpageshadow="2"
-   inkscape:pageopacity="0.0"
-   inkscape:pagecheckerboard="0"
-   inkscape:deskcolor="#d1d1d1"
-   showgrid="false" />
+   id="defs631" />
 <path
-   d="m -122.65,399.8 c 0,-10.3 9.2,-14 19.5,-14 10.3,0 21.3,3.2 21.3,3.2 l 6.6,-39.2 c 0,0 -14,-4.8 -47.4,-4.8 -20.5,0 -32.4,7.8 -41.1,19.3 -8.2,10.9 -8.5,28.4 -8.5,39.7 v 25.7 h -26.5 V 468 h 26.5 v 133 h 49.6 V 468 h 39.3 l 2.9,-38.3 h -42.2 z"
-   id="path626" />
+   d="m -125.55446,414.61576 c 0,-8.21527 7.33791,-11.16639 15.55318,-11.16639 8.21527,0 16.988857,2.55232 16.988857,2.55232 l 5.264153,-31.26588 c 0,0 -11.16638,-3.82847 -37.80619,-3.82847 -16.35077,0 -25.8422,6.22127 -32.78131,15.39366 -6.54031,8.69383 -6.77959,22.65181 -6.77959,31.66467 v 20.49829 h -21.13637 V 469.012 h 21.13637 v 106.08066 h 39.5609 V 469.012 h 31.34564 l 2.313036,-30.54804 h -33.658676 z"
+   id="path626"
+   style="stroke-width:0.797599" />
 </svg>

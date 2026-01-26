@@ -23,6 +23,37 @@ export const CAROUSEL_IMAGES = [
   "/img/mars/7.jpg",
 ];
 
+/** Optimized Mars background images by variant */
+export const OPTIMIZED_CAROUSEL_IMAGES = {
+  mobile: [
+    "/img/mars/optimized/mobile/1.webp",
+    "/img/mars/optimized/mobile/2.webp",
+    "/img/mars/optimized/mobile/3.webp",
+    "/img/mars/optimized/mobile/4.webp",
+    "/img/mars/optimized/mobile/5.webp",
+    "/img/mars/optimized/mobile/6.webp",
+    "/img/mars/optimized/mobile/7.webp",
+  ],
+  tablet: [
+    "/img/mars/optimized/tablet/1.webp",
+    "/img/mars/optimized/tablet/2.webp",
+    "/img/mars/optimized/tablet/3.webp",
+    "/img/mars/optimized/tablet/4.webp",
+    "/img/mars/optimized/tablet/5.webp",
+    "/img/mars/optimized/tablet/6.webp",
+    "/img/mars/optimized/tablet/7.webp",
+  ],
+  desktop: [
+    "/img/mars/optimized/desktop/1.webp",
+    "/img/mars/optimized/desktop/2.webp",
+    "/img/mars/optimized/desktop/3.webp",
+    "/img/mars/optimized/desktop/4.webp",
+    "/img/mars/optimized/desktop/5.webp",
+    "/img/mars/optimized/desktop/6.webp",
+    "/img/mars/optimized/desktop/7.webp",
+  ],
+};
+
 // =============================================================================
 // Animation Durations (in milliseconds)
 // =============================================================================

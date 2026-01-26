@@ -11,14 +11,14 @@ export default function About() {
       <BodyText>
         Robin Marsman is a DJ, electronic music producer and modular synth
         addict based in Leicester, UK. He is also a father, a software monkey
-        and occasionally even more.
+        and occasionally even more besides.
       </BodyText>
       <Image
         src={getAssetPath("/img/robin-marsman.jpg")}
         alt="Robin Marsman"
         width={800}
         height={800}
-        className="rounded-lg mb-8 w-80 shadow-xl border-2 border-white "
+        className="rounded-lg mb-8 w-80 shadow-xl border-2 border-white"
         priority
       />
     </PageContainer>

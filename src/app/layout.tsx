@@ -8,22 +8,30 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
+  preload: false, // Not critical for initial render
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
+  preload: false, // Not critical for initial render
 });
 
 const michroma = Michroma({
   variable: "--font-michroma",
   subsets: ["latin"],
   weight: "400", // Michroma only has one weight
+  display: "swap",
+  preload: true, // Critical for headings
 });
 
 const jura = Jura({
   variable: "--font-jura",
   subsets: ["latin"],
+  display: "swap",
+  preload: true, // Critical for body text
 });
 
 export const metadata: Metadata = {
