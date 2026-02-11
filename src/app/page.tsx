@@ -21,7 +21,7 @@ export default function Home() {
       <PageContainer>
         <H1>robin marsman</H1>
         <Textbox>
-          Debut album <strong>"Red world dawning"</strong> coming soon
+          Debut album <strong>"red world dawning"</strong> coming soon
         </Textbox>
         <SocialLinks />
       </PageContainer>

@@ -11,7 +11,7 @@ export default function Productions() {
     <PageContainer>
       <H1>productions</H1>
       <Textbox>
-        Debut album <strong>"Red world dawning"</strong> coming soon
+        Debut album <strong>"red world dawning"</strong> coming soon
       </Textbox>
     </PageContainer>
   );
