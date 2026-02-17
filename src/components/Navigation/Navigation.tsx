@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import classNames from "classnames";
 import { TextLink } from "@/components/TextLink";
 import { useAnimationPreferences, useNavigationPreloading } from "@/hooks";
+import { navItems } from "@/config";
 
 interface NavLinkProps {
   href: string;
@@ -26,6 +27,7 @@ function NavLink({
     <li className="relative">
       <TextLink
         href={href}
+        theme="light"
         className={classNames(
           "group relative px-2 py-2 text-sm sm:px-3 sm:text-base md:px-4 md:text-lg",
           {
@@ -62,13 +64,6 @@ export function Navigation() {
   const pathname = usePathname();
   const animationPrefs = useAnimationPreferences();
   const { preloadRoute } = useNavigationPreloading();
-
-  const navItems = [
-    { href: "/", label: "Home" },
-    { href: "/mixes", label: "Mixes" },
-    { href: "/productions", label: "Productions" },
-    { href: "/about", label: "About" },
-  ];
 
   // Normalize pathname by removing trailing slash (except for root)
   const normalizedPathname =
