@@ -27,6 +27,13 @@ export default function Mixes() {
         for more.
       </BodyText>
 
+      <H3>Blobby's Creamy Plague Weekender</H3>
+      <BodyText>
+        Live recording of a techno DJ set performed for a late night silent
+        disco tent in a field somewhere in England, in the summer of 2021.
+      </BodyText>
+      <MixcloudEmbed src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Frobinmarsman%2Fdj-set-recorded-live-blobbys-creamy-plague-weekender-2021%2F" />
+
       <H3>Red Mars Radio [0]</H3>
       <BodyText>
         The first half of a two-part platter of ambient, relaxed music to code
