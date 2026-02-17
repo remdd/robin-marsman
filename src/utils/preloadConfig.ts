@@ -1,4 +1,5 @@
 import { getAssetPath } from "@/utils/paths";
+import { routes } from "@/config";
 
 /**
  * Configuration for resources to preload when hovering over navigation links
@@ -11,27 +12,27 @@ import { getAssetPath } from "@/utils/paths";
  * - Third-party embed scripts
  */
 export const ROUTE_PRELOAD_CONFIG = {
-  "/about": [
+  [routes.about.href]: [
     {
       href: getAssetPath("/img/robin-marsman.jpg"),
       as: "image" as const,
     },
   ],
-  "/mixes": [
+  [routes.mixes.href]: [
     // Example: Preload Mixcloud embed resources
     // {
     //   href: 'https://widget.mixcloud.com/media/js/widgetApi.js',
     //   as: 'script' as const,
     // },
   ],
-  "/productions": [
+  [routes.productions.href]: [
     // Example: Preload production images or audio files
     // {
     //   href: getAssetPath('/img/album-cover.webp'),
     //   as: 'image' as const,
     // },
   ],
-  "/": [
+  [routes.home.href]: [
     // Example: Preload next Mars carousel images
     // {
     //   href: getAssetPath('/img/mars/optimized/desktop/2.webp'),
