@@ -22,6 +22,11 @@ export default function Home() {
         <H1>robin marsman</H1>
         <Textbox>
           Debut album <strong>"red world dawning"</strong> coming soon
+          <br />
+          <br />
+          <span className="text-red-600">
+            Bandcamp release <strong>Friday 20th Feb 2026</strong>!
+          </span>
         </Textbox>
         <SocialLinks />
       </PageContainer>

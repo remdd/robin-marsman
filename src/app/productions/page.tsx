@@ -12,6 +12,11 @@ export default function Productions() {
       <H1>productions</H1>
       <Textbox>
         Debut album <strong>"red world dawning"</strong> coming soon
+        <br />
+        <br />
+        <span className="text-red-600">
+          Bandcamp release <strong>Friday 20th Feb 2026</strong>!
+        </span>
       </Textbox>
     </PageContainer>
   );
