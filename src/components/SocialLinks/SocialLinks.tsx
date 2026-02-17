@@ -5,32 +5,33 @@ import Image from "next/image";
 import { TextLink } from "@/components/TextLink/TextLink";
 import { useAnimationPreferences } from "@/hooks";
 import { getAssetPath } from "@/utils/paths";
+import { socialLinks } from "@/config";
 import classNames from "classnames";
 
-interface SocialLink {
+interface SocialLinkItem {
   href: string;
   icon: string;
   label: string;
 }
 
-const socialLinks: SocialLink[] = [
+const socialLinkItems: SocialLinkItem[] = [
   {
-    href: "https://robinmarsman.bandcamp.com/",
+    href: socialLinks.bandcamp,
     icon: "/icons/bandcamp.svg",
     label: "Bandcamp",
   },
   {
-    href: "https://www.mixcloud.com/robinmarsman/",
+    href: socialLinks.mixcloud,
     icon: "/icons/mixcloud.svg",
     label: "Mixcloud",
   },
   {
-    href: "mailto:robinmarsman@proton.me",
+    href: socialLinks.email,
     icon: "/icons/email.svg",
     label: "Email",
   },
   {
-    href: "https://www.facebook.com/people/Robin-Marsman/61587173637583/",
+    href: socialLinks.facebook,
     icon: "/icons/facebook.svg",
     label: "Facebook",
   },
@@ -52,7 +53,7 @@ export function SocialLinks() {
   return (
     <div className="mt-12 flex flex-col items-center">
       <div className="flex items-center justify-center gap-4 sm:gap-6">
-        {socialLinks.map((link) => {
+        {socialLinkItems.map((link) => {
           const transformClasses = classNames(
             "flex items-center justify-center",
             animationPrefs.prefersReducedMotion
@@ -65,6 +66,7 @@ export function SocialLinks() {
               key={link.label}
               href={link.href}
               external={!link.href.startsWith("mailto:")}
+              theme="light"
               className={transformClasses}
               onMouseEnter={() => setHoveredLabel(link.label)}
               onMouseLeave={() => setHoveredLabel(null)}
