@@ -7,6 +7,7 @@ import { H2 } from "@/components/H2";
 import { H3 } from "@/components/H3";
 import { TextLink } from "@/components/TextLink";
 import { createPageMetadata } from "@/lib/metadata";
+import { socialLinks, mixcloudEmbeds } from "@/config";
 
 export const metadata: Metadata = createPageMetadata("mixes");
 
@@ -18,8 +19,9 @@ export default function Mixes() {
       <BodyText>
         Follow on{" "}
         <TextLink
-          href="https://www.mixcloud.com/robinmarsman/"
+          href={socialLinks.mixcloud}
           external
+          theme="light"
           className="underline underline-offset-4"
         >
           Mixcloud
@@ -32,14 +34,14 @@ export default function Mixes() {
         Live recording of a techno DJ set performed for a late night silent
         disco tent in a field somewhere in England, in the summer of 2021.
       </BodyText>
-      <MixcloudEmbed src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Frobinmarsman%2Fdj-set-recorded-live-blobbys-creamy-plague-weekender-2021%2F" />
+      <MixcloudEmbed src={mixcloudEmbeds.blobbysPlagueWeekender} />
 
       <H3>Red Mars Radio [0]</H3>
       <BodyText>
         The first half of a two-part platter of ambient, relaxed music to code
         or otherwise concentrate to.
       </BodyText>
-      <MixcloudEmbed src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Frobinmarsman%2Fred-mars-radio-0%2F" />
+      <MixcloudEmbed src={mixcloudEmbeds.redMarsRadio0} />
 
       <H3>Polycyclic Bisturbilism</H3>
       <BodyText>
@@ -47,7 +49,7 @@ export default function Mixes() {
         tech-housey tangent. Recorded in the studio, shortly after the turn of
         the decade in Jan 2020.
       </BodyText>
-      <MixcloudEmbed src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Frobinmarsman%2Fpolycyclic-bisturbilism%2F" />
+      <MixcloudEmbed src={mixcloudEmbeds.polycyclicBisturbilism} />
 
       <H3>Covidcore // Fish Headband warmup</H3>
       <BodyText>
@@ -61,7 +63,7 @@ export default function Mixes() {
         other curveballs - all interspersed with the occasional mini modular
         synth jam.
       </BodyText>
-      <MixcloudEmbed src="https://player-widget.mixcloud.com/widget/iframe/?hide_cover=1&feed=%2Frobinmarsman%2Fcovidcore-fish-headband%2F" />
+      <MixcloudEmbed src={mixcloudEmbeds.covidcoreFishHeadband} />
     </PageContainer>
   );
 }
