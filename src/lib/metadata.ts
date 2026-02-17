@@ -1,20 +1,9 @@
 import { Metadata } from "next";
-
-// Base site configuration
-const SITE_CONFIG = {
-  name: "Robin Marsman",
-  title: "Robin Marsman | UK DJ & electronic music producer",
-  description:
-    "Electronic music producer and DJ based in Leicester, UK. Specializing in techno, electro, ambient and other underground electronic music. Listen to original productions and DJ mixes.",
-  url: "https://robinmarsman.com",
-  locale: "en_GB",
-  location: "Leicester, UK",
-  genre: ["Techno", "Electro", "Ambient", "Electronic", "Underground"],
-} as const;
+import { siteConfig } from "@/config";
 
 // OpenGraph image configuration
 const OG_IMAGE = {
-  url: `${SITE_CONFIG.url}/img/robin-marsman-og.jpg`,
+  url: `${siteConfig.url}/img/robin-marsman-og.jpg`,
   width: 1200,
   height: 630,
   alt: "Robin Marsman - UK electronic music producer & DJ",
@@ -22,12 +11,12 @@ const OG_IMAGE = {
 
 // Default metadata that applies to all pages
 export const defaultMetadata: Metadata = {
-  metadataBase: new URL(SITE_CONFIG.url),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: SITE_CONFIG.title,
-    template: `%s | ${SITE_CONFIG.name}`,
+    default: siteConfig.title,
+    template: `%s | ${siteConfig.name}`,
   },
-  description: SITE_CONFIG.description,
+  description: siteConfig.description,
   keywords: [
     "electronic music producer",
     "Leicester DJ",
@@ -39,30 +28,30 @@ export const defaultMetadata: Metadata = {
     "underground electronic",
     "independent electronic artist",
   ] as string[],
-  authors: [{ name: SITE_CONFIG.name }],
-  creator: SITE_CONFIG.name,
-  publisher: SITE_CONFIG.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   category: "Music",
   classification: "Entertainment",
 
   // OpenGraph
   openGraph: {
     type: "website",
-    locale: SITE_CONFIG.locale,
-    url: SITE_CONFIG.url,
-    siteName: SITE_CONFIG.name,
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: [OG_IMAGE],
   },
 
   // Twitter
   twitter: {
     card: "summary_large_image",
-    site: SITE_CONFIG.name,
-    creator: SITE_CONFIG.name,
-    title: SITE_CONFIG.title,
-    description: SITE_CONFIG.description,
+    site: siteConfig.name,
+    creator: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
     images: [OG_IMAGE.url],
   },
 
@@ -99,7 +88,7 @@ export const pageMetadata = {
     openGraph: {
       title: "Robin Marsman | UK DJ & electronic music producer",
       description: "Electronic music producer and DJ based in Leicester, UK.",
-      url: SITE_CONFIG.url,
+      url: siteConfig.url,
     },
   },
 
@@ -120,7 +109,7 @@ export const pageMetadata = {
       title: "Robin Marsman | About",
       description:
         "Learn about Robin Marsman, electronic music producer and DJ based in Leicester, UK.",
-      url: `${SITE_CONFIG.url}/about`,
+      url: `${siteConfig.url}/about`,
     },
   },
 
@@ -138,7 +127,7 @@ export const pageMetadata = {
     openGraph: {
       title: "Robin Marsman | Music Productions",
       description: "Original electronic music productions by Robin Marsman.",
-      url: `${SITE_CONFIG.url}/productions`,
+      url: `${siteConfig.url}/productions`,
     },
   },
 
@@ -161,7 +150,7 @@ export const pageMetadata = {
     openGraph: {
       title: "Robin Marsman | DJ mixes & live sets",
       description: "DJ mixes and live sets by Robin Marsman.",
-      url: `${SITE_CONFIG.url}/mixes`,
+      url: `${siteConfig.url}/mixes`,
     },
   },
 } as const;
@@ -193,15 +182,15 @@ export const structuredData = {
   person: {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: SITE_CONFIG.name,
+    name: siteConfig.name,
     jobTitle: ["DJ", "Music Producer", "Electronic Music Artist"],
-    description: SITE_CONFIG.description,
-    url: SITE_CONFIG.url,
+    description: siteConfig.description,
+    url: siteConfig.url,
     location: {
       "@type": "Place",
-      name: SITE_CONFIG.location,
+      name: siteConfig.location,
     },
-    genre: SITE_CONFIG.genre,
+    genre: siteConfig.genre,
     sameAs: [
       // Add these URLs when you have them
       // "https://bandcamp.com/robinmarsman",
@@ -216,21 +205,21 @@ export const structuredData = {
     name: "Red world dawning",
     byArtist: {
       "@type": "Person",
-      name: SITE_CONFIG.name,
+      name: siteConfig.name,
     },
     genre: ["Electronic", "Techno", "Electro", "Ambient"],
-    url: `${SITE_CONFIG.url}/productions`,
+    url: `${siteConfig.url}/productions`,
   },
 
   website: {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: SITE_CONFIG.name,
-    description: SITE_CONFIG.description,
-    url: SITE_CONFIG.url,
+    name: siteConfig.name,
+    description: siteConfig.description,
+    url: siteConfig.url,
     potentialAction: {
       "@type": "SearchAction",
-      target: `${SITE_CONFIG.url}?q={search_term_string}`,
+      target: `${siteConfig.url}?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   },
@@ -238,14 +227,12 @@ export const structuredData = {
   organization: {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: SITE_CONFIG.name,
-    description: `Electronic music producer and DJ based in ${SITE_CONFIG.location}`,
-    url: SITE_CONFIG.url,
+    name: siteConfig.name,
+    description: `Electronic music producer and DJ based in ${siteConfig.location}`,
+    url: siteConfig.url,
     location: {
       "@type": "Place",
-      name: SITE_CONFIG.location,
+      name: siteConfig.location,
     },
   },
 } as const;
-
-export { SITE_CONFIG };
