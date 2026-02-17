@@ -9,6 +9,8 @@ interface TextLinkProps {
   children: React.ReactNode;
   className?: string;
   external?: boolean;
+  theme?: "dark" | "light";
+  underline?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onFocus?: () => void;
@@ -20,6 +22,8 @@ export function TextLink({
   children,
   className = "",
   external = false,
+  theme = "dark",
+  underline = false,
   onMouseEnter,
   onMouseLeave,
   onFocus,
@@ -28,7 +32,16 @@ export function TextLink({
   const animationPrefs = useAnimationPreferences();
 
   const linkClasses = classNames(
-    "inline-block tracking-wider text-white hover:text-gray-300",
+    "inline-block tracking-wider",
+    theme === "light" && "text-white hover:text-gray-300",
+    theme === "light" &&
+      underline &&
+      "decoration-white hover:decoration-gray-300",
+    underline && "underline underline-offset-4",
+    theme === "dark" && "text-gray-900 hover:text-gray-600",
+    theme === "dark" &&
+      underline &&
+      "decoration-gray-900 hover:decoration-gray-600",
     animationPrefs.prefersReducedMotion
       ? "transition-colors duration-75" // Quick, gentle transition for reduced motion
       : "transition-colors duration-200", // Original transition

@@ -1,0 +1,12 @@
+{
+  "active": true,
+  "iteration": 1,
+  "maxIterations": 0,
+  "completionPromise": null,
+  "sessionId": "ses_393d1afb6ffeEkeCqXaLrn2n7b",
+  "startedAt": "2026-02-17T16:02:01.032Z",
+  "planFile": ".opencode/plans/centralise-links-config.md",
+  "currentTaskId": "task-1",
+  "mode": "loop",
+  "currentTaskNum": 1
+}

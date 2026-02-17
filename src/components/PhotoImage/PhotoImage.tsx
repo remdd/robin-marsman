@@ -1,16 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import { getAssetPath } from "@/utils/paths";
+import Image, { StaticImageData } from "next/image";
 import { useAnimationPreferences } from "@/hooks";
 import classNames from "classnames";
 
-interface ProfileImageProps {
+interface PhotoImageProps {
+  src: StaticImageData;
+  alt: string;
   className?: string;
 }
 
-export function ProfileImage({ className = "" }: ProfileImageProps) {
+export function PhotoImage({ src, alt, className = "" }: PhotoImageProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
   const animationPrefs = useAnimationPreferences();
 
@@ -19,19 +20,17 @@ export function ProfileImage({ className = "" }: ProfileImageProps) {
       {/* Placeholder/skeleton while loading */}
       {!imageLoaded && (
         <div
-          className="mb-8 h-80 w-80 rounded-lg border-2 border-white/20 bg-gray-800/40 shadow-xl"
+          className="mb-8 aspect-square w-full rounded-lg border-2 border-white/20 bg-gray-800/40 shadow-xl"
           aria-hidden="true"
         />
       )}
 
       {/* Actual image with fade-in transition */}
       <Image
-        src={getAssetPath("/img/robin-marsman.jpg")}
-        alt="Robin Marsman"
-        width={800}
-        height={800}
+        src={src}
+        alt={alt}
         className={classNames(
-          "mb-8 w-80 rounded-lg border-2 border-white shadow-xl",
+          "mb-8 w-full rounded-lg border-2 border-white shadow-xl",
           // Respect motion preferences for transitions
           animationPrefs.prefersReducedMotion
             ? "" // No transition for reduced motion
@@ -43,7 +42,6 @@ export function ProfileImage({ className = "" }: ProfileImageProps) {
         onLoad={() => setImageLoaded(true)}
         onError={() => setImageLoaded(true)} // Show even if there's an error
         priority
-        sizes="320px"
       />
     </div>
   );
