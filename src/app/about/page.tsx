@@ -4,7 +4,7 @@ import { H1 } from "@/components/H1";
 import { BodyText } from "@/components/BodyText";
 import { PhotoImage } from "@/components/PhotoImage";
 import { createPageMetadata } from "@/lib/metadata";
-import robinMarsmanImage from "@public/img/robin-marsman.jpg";
+import robinMarsmanImage from "@public/img/robin-marsman-optimized.webp";
 
 export const metadata: Metadata = createPageMetadata("about");
 
@@ -21,6 +21,7 @@ export default function About() {
         src={robinMarsmanImage}
         alt="Robin Marsman"
         className="w-80"
+        sizes="320px"
       />
     </PageContainer>
   );

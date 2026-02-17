@@ -1,0 +1,1 @@
+export { AlbumPromoBox } from "./AlbumPromoBox";
