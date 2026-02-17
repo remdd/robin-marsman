@@ -12,7 +12,7 @@ export default function About() {
   return (
     <PageContainer>
       <H1>about</H1>
-      <BodyText>
+      <BodyText theme="light">
         Robin Marsman is a DJ, electronic music producer and modular synth
         addict based in Leicester, UK. He is also a father, a software monkey
         and occasionally even more besides.
