@@ -4,6 +4,10 @@ import { H1 } from "@/components/H1";
 import { Textbox } from "@/components/Textbox/Textbox";
 import { SocialLinks } from "@/components/SocialLinks";
 import { createPageMetadata, structuredData } from "@/lib/metadata";
+import { TextLink } from "@/components/TextLink";
+import { PhotoImage } from "@/components/PhotoImage";
+import { albumLinks } from "@/config";
+import redWorldDawningImage from "@public/img/robin-marsman---red-world-dawning.jpg";
 
 export const metadata: Metadata = createPageMetadata("home");
 
@@ -21,12 +25,31 @@ export default function Home() {
       <PageContainer>
         <H1>robin marsman</H1>
         <Textbox>
-          Debut album <strong>"red world dawning"</strong> coming soon
+          Debut album <strong>"red world dawning"</strong> out now on{" "}
+          <TextLink
+            href={albumLinks.redWorldDawning}
+            external
+            underline
+            theme="dark"
+          >
+            Bandcamp
+          </TextLink>
+          !
           <br />
           <br />
-          <span className="text-red-600">
-            Bandcamp release <strong>Friday 20th Feb 2026</strong>!
-          </span>
+          <div className="flex flex-col items-center">
+            <a
+              href={albumLinks.redWorldDawning}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <PhotoImage
+                src={redWorldDawningImage}
+                alt="Album cover for Red World Dawning by Robin Marsman"
+                className="w-160"
+              />
+            </a>
+          </div>
         </Textbox>
         <SocialLinks />
       </PageContainer>
