@@ -2,8 +2,9 @@ import { Metadata } from "next";
 import { PageContainer } from "@/components/PageContainer";
 import { H1 } from "@/components/H1";
 import { BodyText } from "@/components/BodyText";
-import { ProfileImage } from "@/components/ProfileImage";
+import { PhotoImage } from "@/components/PhotoImage";
 import { createPageMetadata } from "@/lib/metadata";
+import robinMarsmanImage from "@public/img/robin-marsman.jpg";
 
 export const metadata: Metadata = createPageMetadata("about");
 
@@ -16,7 +17,11 @@ export default function About() {
         addict based in Leicester, UK. He is also a father, a software monkey
         and occasionally even more besides.
       </BodyText>
-      <ProfileImage />
+      <PhotoImage
+        src={robinMarsmanImage}
+        alt="Robin Marsman"
+        className="w-80"
+      />
     </PageContainer>
   );
 }
