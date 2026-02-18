@@ -14,8 +14,8 @@ export default function About() {
       <H1>about</H1>
       <BodyText theme="light">
         Robin Marsman is a DJ, electronic music producer and modular synth
-        addict based in Leicester, UK. He is also a father, a software monkey
-        and occasionally even more besides.
+        addict based in Leicester, UK. He is also a father, a software monkey,
+        an artist in inverted commas, and occasionally even more besides.
       </BodyText>
       <PhotoImage
         src={robinMarsmanImage}
