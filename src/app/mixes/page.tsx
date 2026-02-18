@@ -38,7 +38,7 @@ export default function Mixes() {
 
       <H3>Red Mars Radio [0]</H3>
       <BodyText theme="light">
-        The first half of a two-part platter of ambient, relaxed music to code
+        The first half of a two-part platter of relaxed, ambient music to code
         or otherwise concentrate to.
       </BodyText>
       <MixcloudEmbed src={mixcloudEmbeds.redMarsRadio0} />

@@ -70,7 +70,7 @@ export function Navigation() {
     pathname === "/" ? "/" : pathname.replace(/\/$/, "");
 
   return (
-    <nav className="fixed left-0 right-0 top-0 z-20 px-4 py-4 sm:py-6 md:py-8">
+    <nav className="fixed left-0 right-0 top-0 z-20 border-b border-white px-4 py-4 sm:py-6 md:py-8">
       <ul className="flex flex-wrap justify-center gap-x-2 gap-y-2 sm:gap-x-4 md:gap-x-8">
         {navItems.map(({ href, label }) => {
           const isActive = normalizedPathname === href;
