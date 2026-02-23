@@ -31,7 +31,7 @@ export function PageContainer({
   return (
     <div
       className={classNames(
-        "mx-auto flex min-h-[60vh] w-full max-w-[1024px] flex-col items-center justify-items-start p-4 pt-16 sm:p-8 sm:pt-20 md:w-10/12 md:p-12 md:pt-24 lg:w-8/12 lg:p-16 lg:pt-24",
+        "mx-auto flex min-h-[60vh] w-full max-w-[1024px] flex-col items-center justify-items-start p-4 sm:p-8 md:w-10/12 md:p-12 lg:w-8/12 lg:p-16",
         animationPrefs.prefersReducedMotion
           ? "ease transition-opacity duration-100" // Gentle, quick fade for reduced motion
           : "transition-opacity duration-700 ease-out", // Original smooth transition

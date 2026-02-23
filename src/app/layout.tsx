@@ -84,10 +84,10 @@ export default function RootLayout({
         {/* Fixed navigation */}
         <Navigation />
 
-        {/* Scrollable content viewport */}
-        <div className="fixed inset-0 top-[108px] z-10 overflow-y-auto">
+        {/* Scrollable content viewport - top offset matches nav height at each breakpoint */}
+        <main className="fixed inset-0 top-[72px] z-10 overflow-y-auto sm:top-[92px] md:top-[112px]">
           {children}
-        </div>
+        </main>
       </body>
     </html>
   );
