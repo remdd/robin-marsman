@@ -16,6 +16,12 @@ export const albumLinks = {
   redWorldDawning: "https://robinmarsman.bandcamp.com/album/red-world-dawning",
 } as const;
 
+/** Bandcamp embed widget URLs */
+export const bandcampEmbeds = {
+  redWorldDawning:
+    "https://bandcamp.com/EmbeddedPlayer/album=3202784042/size=large/bgcol=ffffff/linkcol=de270f/transparent=true/",
+} as const;
+
 /** Mixcloud embed widget URLs */
 export const mixcloudEmbeds = {
   blobbysPlagueWeekender:
@@ -30,4 +36,5 @@ export const mixcloudEmbeds = {
 
 export type SocialLinkKey = keyof typeof socialLinks;
 export type AlbumLinkKey = keyof typeof albumLinks;
+export type BandcampEmbedKey = keyof typeof bandcampEmbeds;
 export type MixcloudEmbedKey = keyof typeof mixcloudEmbeds;
